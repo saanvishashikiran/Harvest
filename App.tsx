@@ -1,4 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
+import { TextInput } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native'
+import Tabs from "./components/Tabs"
 import { StyleSheet, Text, View , ScrollView, SafeAreaView} from 'react-native';
 import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
 import AppLoading from 'expo-app-loading';
@@ -22,6 +26,9 @@ export default function App() {
   }
 
   return (
+    <NavigationContainer>
+      <Tabs />
+    </NavigationContainer>
     <View style={styles.container}>
       <CandidatesFeed />  
       <StatusBar style="auto" />
@@ -37,6 +44,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SignUp">
         <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
