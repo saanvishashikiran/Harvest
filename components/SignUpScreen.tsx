@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Button } from "react-native-paper";
+import { supabase } from "../lib/supabase";
 
 
 
@@ -10,7 +11,10 @@ const SignUpScreen = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -25,9 +29,69 @@ const SignUpScreen = () => {
     }
   };
 
+  
+async function signUp() {
+  setLoading(true);
+  console.log("🔄 Signing up user...");
+
+  const { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: password,
+  });
+
+  console.log("🧾 Sign-up response:", data);
+  if (error) {
+    console.error("❌ Auth error:", error.message);
+    Alert.alert("Auth error", error.message);
+    setLoading(false);
+    return;
+  }
+
+  const userId = data?.user?.id;
+  console.log("🆔 User ID:", userId);
+
+  if (!userId) {
+    console.warn(
+      "⚠️ No user ID returned — maybe email confirmation is required."
+    );
+    Alert.alert(
+      "Email verification",
+      "Please check your inbox for email verification!"
+    );
+    setLoading(false);
+    return;
+  }
+
+  console.log("📤 Inserting user into custom users table...");
+  const { error: insertError } = await supabase.from("accounts").insert([
+    {
+      uuid: userId,
+      email,
+      first_name: firstName,
+      last_name: lastName,
+      password,
+      role
+    },
+  ]);
+
+  if (insertError) {
+    console.error("❌ Insert error:", insertError.message);
+    Alert.alert(
+      "Database error",
+      "Failed to save user profile: " + insertError.message
+    );
+  } else {
+    console.log("✅ User profile inserted successfully!");
+    Alert.alert("Success", "Account created!");
+  }
+
+  setLoading(false);
+}
+
+
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/logo.png")} style = {styles.logo} />
+      <Image source={require("../assets/logo.png")} style={styles.logo} />
 
       <View style={styles.card}>
         <Text style={styles.title}>Sign Up</Text>
@@ -46,7 +110,22 @@ const SignUpScreen = () => {
             onChangeText={setLastName}
           />
         </View>
-
+        <View style={{ position: "relative" }}>
+          <TextInput
+            style={styles.inputFull}
+            placeholder="Password"
+            secureTextEntry={!showPassword}
+            autoCapitalize="none"
+            value={password}
+            onChangeText={setPassword}
+          />
+          <TouchableOpacity
+            onPress = {() => setShowPassword(prev => !prev)}
+            style={{ position: "absolute", right: 10, top: 12 }}
+          >
+            <Text> {showPassword? '🔒' : '👁️'} </Text>
+          </TouchableOpacity>
+        </View>
         <TextInput
           style={styles.inputFull}
           placeholder="Email"
@@ -89,7 +168,8 @@ const SignUpScreen = () => {
         <Button
           mode="contained"
           style={styles.confirmButton}
-          onPress={() => {}}
+          disabled={loading}
+          onPress={signUp}
         >
           Confirm
         </Button>
