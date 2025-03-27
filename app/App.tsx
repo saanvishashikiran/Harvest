@@ -5,8 +5,8 @@ import { useFonts, Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/
 import AppLoading from 'expo-app-loading';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import SignUpScreen from './components/SignUpScreen';
-
+import AuthNavigator
+ from './AuthNavigator';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -14,9 +14,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SignUp">
-        <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
+      <AuthNavigator />
       <StatusBar style="auto" />
     </NavigationContainer>
   );
