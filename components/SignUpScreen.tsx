@@ -61,15 +61,14 @@ async function signUp() {
     setLoading(false);
     return;
   }
+console.log("auth.uid() at insert:", supabase.auth.getSession());
 
   console.log("📤 Inserting user into custom users table...");
   const { error: insertError } = await supabase.from("accounts").insert([
     {
-      uuid: userId,
-      email,
+      email: email,
       first_name: firstName,
       last_name: lastName,
-      password,
       role
     },
   ]);
