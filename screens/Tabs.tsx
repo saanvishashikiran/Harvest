@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { StyleSheet, Text, View, Image } from 'react-native';
 import React from "react"
-import JobsPage from "./../components/JobsPage"
-import AddPage from "./../components/AddPage"
-import EmailPage from "./../components/EmailPage"
+import JobsPage from "./JobsPage"
+import AddPage from "./farmer/AddPage"
+import EmailPage from "./EmailPage"
 
 const Tab = createBottomTabNavigator();
 

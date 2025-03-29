@@ -6,7 +6,7 @@ import AppLoading from 'expo-app-loading';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import AuthNavigator
- from './AuthNavigator';
+ from './navigation/AuthNavigator';
 const Stack = createStackNavigator();
 
 export default function App() {

@@ -30,6 +30,10 @@ const SignUpScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   
 async function signUp() {
+  if(!email || !password || !firstName || !lastName || !role) {
+    Alert.alert("Error", "Please fill in all fields.");
+    return;
+  }
   setLoading(true);
   console.log("🔄 Signing up user...");
 

@@ -18,6 +18,10 @@ const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) =>{
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Error", "Please fill in all fields.");
+      return;
+    }
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
       email,
