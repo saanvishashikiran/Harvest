@@ -1,30 +1,39 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { NavigationContainer } from "@react-navigation/native";
+import { ActivityIndicator, View } from "react-native";
 import { useAuth } from "../hooks/useAuth";
 import AuthNavigator from "./AuthNavigator";
 import FarmerTabs from "./FarmerTabs";
 import PickerTabs from "./PickerTabs";
-import { ActivityIndicator, View } from "react-native";
 
 export default function RootNavigator() {
   const { user, role, loading } = useAuth();
 
-  if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center" }}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+  useEffect(() => {
+    console.log("Auth Debug:", {
+      userExists: !!user,
+      authRole: user?.role, // This will be "authenticated"
+      customRole: role, // This should be "farmer" or "picker"
+    });
+  }, [user, role]);
+
+  if (loading) return <ActivityIndicator size="large" style={{ flex: 1 }} />;
 
   return (
     <NavigationContainer>
-      {!user ? (
-        <AuthNavigator />
-      ) : role === "farmer" ? (
-        <FarmerTabs />
+      {user ? (
+        role === "farmer" ? (
+          <FarmerTabs />
+        ) : role === "picker" ? (
+          <PickerTabs />
+        ) : (
+          <>
+            <AuthNavigator />
+            {console.warn("No valid role assigned - showing auth screen")}
+          </>
+        )
       ) : (
-        <PickerTabs />
+        <AuthNavigator />
       )}
     </NavigationContainer>
   );

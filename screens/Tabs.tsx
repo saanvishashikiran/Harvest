@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { StyleSheet, Text, View, Image } from 'react-native';
 import React from "react"
-import JobsPage from "./JobsPage"
+import JobsPage from "./farmer/JobsPage"
 import AddPage from "./farmer/AddPage"
 import EmailPage from "./EmailPage"
 

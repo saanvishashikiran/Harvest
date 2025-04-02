@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
-import JobsPage from "../screens/farmer/CandidatesFeed";
+import JobsPage from "../screens/farmer/JobsPage";
 import AddPage from "../screens/farmer/AddPage";
 import EmailPage from "../screens/EmailPage";
 
@@ -21,10 +21,10 @@ const FarmerTabs = () => {
       <Tab.Screen
         name="Home"
         component={JobsPage}
-        options={{
+        options={{ 
           tabBarIcon: () => (
             <View style={styles.image}>
-              <Image source={require("./../../photos/HomeImage.png")} />
+              <Image source={require("../assets/home.png")} />
             </View>
           ),
         }}
@@ -35,7 +35,7 @@ const FarmerTabs = () => {
         options={{
           tabBarIcon: () => (
             <View style={{ marginTop: 25 }}>
-              <Image source={require("./../../photos/Add.png")} />
+              <Image source={require("../assets/feed.png")} />
             </View>
           ),
         }}
@@ -46,7 +46,7 @@ const FarmerTabs = () => {
         options={{
           tabBarIcon: () => (
             <View style={{ marginTop: 25 }}>
-              <Image source={require("./../../photos/Email.png")} />
+              <Image source={require("../assets/messages.png")} />
             </View>
           ),
         }}
