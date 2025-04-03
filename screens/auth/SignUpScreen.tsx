@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Button } from "react-native-paper";
-import { supabase } from "../lib/supabase";
+import { supabase } from "../../lib/supabase";
 
 
-
-const SignUpScreen = () => {
+const SignUpScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,6 +30,10 @@ const SignUpScreen = () => {
 
   
 async function signUp() {
+  if(!email || !password || !firstName || !lastName || !role) {
+    Alert.alert("Error", "Please fill in all fields.");
+    return;
+  }
   setLoading(true);
   console.log("🔄 Signing up user...");
 
@@ -61,15 +64,14 @@ async function signUp() {
     setLoading(false);
     return;
   }
+console.log("auth.uid() at insert:", supabase.auth.getSession());
 
   console.log("📤 Inserting user into custom users table...");
   const { error: insertError } = await supabase.from("accounts").insert([
     {
-      uuid: userId,
-      email,
+      email: email,
       first_name: firstName,
       last_name: lastName,
-      password,
       role
     },
   ]);
@@ -91,7 +93,7 @@ async function signUp() {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/logo.png")} style={styles.logo} />
+      <Image source={require("../../assets/logo.png")} style={styles.logo} />
 
       <View style={styles.card}>
         <Text style={styles.title}>Sign Up</Text>
@@ -120,10 +122,10 @@ async function signUp() {
             onChangeText={setPassword}
           />
           <TouchableOpacity
-            onPress = {() => setShowPassword(prev => !prev)}
+            onPress={() => setShowPassword((prev) => !prev)}
             style={{ position: "absolute", right: 10, top: 12 }}
           >
-            <Text> {showPassword? '🔒' : '👁️'} </Text>
+            <Text> {showPassword ? "🔒" : "👁️"} </Text>
           </TouchableOpacity>
         </View>
         <TextInput
@@ -173,6 +175,13 @@ async function signUp() {
         >
           Confirm
         </Button>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <Text
+            style={{ marginTop: 15, textAlign: "center", color: "#3F6939" }}
+          >
+            Already have an account? Log In
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import React from "react"
-import PagePost from "./jobcomponents/PagePost"
+import PagePost from "../jobcomponents/PagePost"
 
 
 const MyJobsPage = () => {
