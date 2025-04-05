@@ -12,8 +12,8 @@ export default function RootNavigator() {
   useEffect(() => {
     console.log("Auth Debug:", {
       userExists: !!user,
-      authRole: user?.role, // This will be "authenticated"
-      customRole: role, // This should be "farmer" or "picker"
+      authRole: user?.role, 
+      customRole: role, 
     });
   }, [user, role]);
 
