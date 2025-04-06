@@ -24,6 +24,9 @@ const FarmerPost = (props : CustomerProps) => {
                         <View style = {{marginTop: 7, marginLeft: 8}}>
                             <Text style = {styles.text}>username</Text>
                         </View>
+                        <TouchableOpacity onPress = {buttonPress} style = {styles.deleteButton}>
+                            <Text style = {{fontSize: 25, color: 'white'}}>x</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
 
@@ -105,8 +108,9 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginTop: 5
     },
-    touch :{
-        borderRadius: 20
+    deleteButton : {
+        marginLeft: 205,
+        marginTop: 1
     }
 
 })

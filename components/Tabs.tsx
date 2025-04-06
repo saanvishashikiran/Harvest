@@ -4,6 +4,7 @@ import React from "react"
 import JobsPage from "./../components/JobsPage"
 import AddPage from "./../components/AddPage"
 import EmailPage from "./../components/EmailPage"
+import ActivePostsPage from "./ActivePostsPage";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +21,7 @@ const Tabs = () => {
         >
             <Tab.Screen
             name = "Home"
-            component = {JobsPage}
+            component = {ActivePostsPage}
             options = {{
                 tabBarIcon: ({focused}) =>{
                     return (
