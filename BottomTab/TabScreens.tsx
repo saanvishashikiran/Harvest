@@ -9,6 +9,7 @@ type screenType = {
     CandidatesFeed: undefined;
     Ratings: undefined;
     Messages: undefined;
+    StackNav: undefined;
 };
 
 
