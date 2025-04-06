@@ -13,7 +13,7 @@ import AddPostPage from './components/AddPostPage';
 export default function App() {
   return (
     <NavigationContainer>
-      <Tabs />
+      <AddPostPage />
     </NavigationContainer>
   );
 }
