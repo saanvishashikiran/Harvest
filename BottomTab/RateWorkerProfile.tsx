@@ -8,6 +8,7 @@ type RateWorkerModalProps = {
   onSubmit: (rating: number) => void;
   worker: {
     name: string;
+    experience: number;
   };
 };
 
@@ -24,9 +25,17 @@ export default function RateWorkerModal({ isVisible, onClose, onSubmit, worker }
     setSelectedRating(0); // reset for next time
   };
 
+  const getBackgroundColor = (experience: number) => {
+    if (experience >= 15) return '#5F8250';
+    else if (experience >= 10) return '#699866';
+    else if (experience >= 5) return '#8A9B6F';
+    else if (experience >= 2) return '#8ea37a';
+    else return '#B6C59D';
+  };
+
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose} style={styles.modal}>
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: getBackgroundColor(worker.experience) }]}>
         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
           <Text style={styles.closeText}>✕</Text>
         </TouchableOpacity>
@@ -79,6 +88,7 @@ const styles = StyleSheet.create({
   closeText: {
     fontSize: 20,
     color: '#fff',
+    fontFamily: 'Roboto Regular',
   },
   profileSection: {
     alignItems: 'center',
@@ -95,12 +105,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#fff',
     fontWeight: 'bold',
+    fontFamily: 'Roboto Regular',
   },
   prompt: {
     fontSize: 16,
     color: '#fff',
     marginBottom: 12,
     textAlign: 'center',
+    fontFamily: 'Roboto Regular',
   },
   starsRow: {
     flexDirection: 'row',
@@ -125,5 +137,6 @@ const styles = StyleSheet.create({
   submitText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontFamily: 'Roboto Regular',
   },
 });

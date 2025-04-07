@@ -92,20 +92,21 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
             backdropTransitionInTiming={200}
             backdropTransitionOutTiming={200}
             style={styles.modal}
-            >
+          >
             {selectedPicker && (
-                <Profile data={selectedPicker} onClose={closeProfile} />
+              <Profile data={selectedPicker} onClose={closeProfile} />
             )}
-            </Modal>
+          </Modal>
         </SafeAreaView>
       );
      }
      const styles = StyleSheet.create({
-        container: { flex: 1, backgroundColor: '#e8f0e4' },
+        container: { flex: 1, backgroundColor: '#FFFFFF' },
         logo: {
             width: 170, 
             height: 70, 
             alignSelf: 'center',
+            marginTop: 3,
         },
         card: {
             width: windowWidth * 0.45,
@@ -119,9 +120,9 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
             shadowRadius: 3.84,
             elevation: 5,
         },
-        name: { fontSize: 16, fontWeight: 'bold', color: '#fff', marginBottom: 4, textAlign: 'center' },
-        location: { color: '#fff', fontSize: 12, textAlign: 'center' },
-        experience: { color: '#fff', marginBottom: 8, fontSize: 12, textAlign: 'center' },
+        name: { fontSize: 16, fontWeight: 'bold', color: '#fff', marginBottom: 4, textAlign: 'center', fontFamily: 'Roboto Regular'},
+        location: { color: '#fff', fontSize: 12, textAlign: 'center',fontFamily: 'Roboto Regular' },
+        experience: { color: '#fff', marginBottom: 8, fontSize: 12, textAlign: 'center', fontFamily: 'Roboto Regular' },
         stars: { flexDirection: 'row', marginBottom: 8 },
         button: {
             marginTop: 8,
@@ -131,7 +132,7 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
             borderRadius: 30,
             alignItems: 'center',
         },
-        buttonText: { color: '#fff', fontSize: 12 },
+        buttonText: { color: '#fff', fontSize: 12, fontFamily: 'Roboto Regular'},
         navBar: {
             flexDirection: 'row',
             justifyContent: 'space-around',

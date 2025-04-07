@@ -22,6 +22,9 @@ const FarmerPost = (props : CustomerProps) => {
   };
 
     return (
+        <View style={styles.screen}>
+       <Image source={require('../assets/logo.png')} style={styles.logo} resizeMode="contain" />
+
         <View style= {styles.box}>
                 <View style={styles.header}> 
                     <View style = {{flex: 1, flexWrap: 'wrap', marginTop: 8, marginLeft: 10}}>
@@ -54,6 +57,7 @@ const FarmerPost = (props : CustomerProps) => {
                     </View>
                 </View>
         </View>
+        </View>
     )
 }
 
@@ -66,7 +70,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#F6F9F3",
         marginVertical: 10, 
         marginLeft: 12,
-        marginTop: 100,
+        marginTop: 12,
         borderRadius: 8
     },
     text : {
@@ -113,6 +117,16 @@ const styles = StyleSheet.create({
     },
     touch :{
         borderRadius: 20
-    }
-
+    },
+    screen: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+        paddingTop: 50, // or use SafeAreaView
+        alignItems: 'center',
+      },
+      logo: {
+        width: 170,
+        height: 70,
+        marginBottom: 0,
+      }
 })
