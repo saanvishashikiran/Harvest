@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import React from "react"
-import Post from "./jobcomponents/Post"
+import Post from "../jobcomponents/Post"
 
 
 const JobsPage = () => {
     return (
         <View>
             <View style={styles.image}>
-                <Image source={require('./../photos/Logo_Final.png')}/>
+                <Image source={require('../../assets/logo.png')}/>
             </View>
             <ScrollView contentContainerStyle = {{flexGrow: 1}}>
                 <Post date = "3/20/20" position = {400} location = "Farmington, CT" pay = {2} jobDescription='You can pick anything you want'/>
