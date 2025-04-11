@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 type ProfileProps = {
@@ -21,8 +21,17 @@ export default function Profile({ data, onClose }: ProfileProps) {
       <Text key={i} style={{ color: i < count ? 'gold' : 'lightgray', fontSize: 16 }}>★</Text>
     ));
 
+    const getBackgroundColor = (experience: number) => 
+    {   if (experience >= 15) return '#5F8250';
+        else if (experience >= 10) return '#699866';
+        else if (experience >= 5) return '#8A9B6F';
+        else if (experience >= 2) return '#8ea37a';
+        else return '#B6C59D';
+    };
+  
+
   return (
-    <View style={styles.modalContainer}>
+    <View style={[styles.modalContainer, { backgroundColor: getBackgroundColor(experience) }]}>
       <TouchableOpacity onPress={onClose} style={styles.closeButton}>
         <Text style={styles.closeText}>✕</Text>
       </TouchableOpacity>
@@ -63,13 +72,21 @@ export default function Profile({ data, onClose }: ProfileProps) {
         <Text style={styles.contactItem}>+ (123) 456-7890</Text>
         <Text style={styles.contactItem}>picker@example.com</Text>
       </View>
+
+      <TouchableOpacity
+        onPress={() => Alert.alert("Success", "Candidate has been successfully chosen")}
+        style={styles.chooseButton}
+      >
+        <Text style={styles.chooseButtonText}>Choose Candidate</Text>
+      </TouchableOpacity>
+
     </View>
+    
   );
 }
 
 const styles = StyleSheet.create({
     modalContainer: {
-        backgroundColor: '#6F7E4D',
         padding: 20,
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
@@ -89,6 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#fff',
     fontWeight: 'bold',
+    fontFamily: 'Roboto Regular',
   },
   headerRow: {
     flexDirection: 'row',
@@ -111,6 +129,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 4,
+    textAlign: 'left',
+    fontFamily: 'Roboto Regular',
   },
   stars: {
     flexDirection: 'row',
@@ -121,12 +141,14 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     textAlign: 'left',
     marginBottom: 10,
+    fontFamily: 'Roboto Regular',
   },
   info: {
     fontSize: 14,
     color: '#fff',
     marginBottom: 4,
     textAlign: 'left',
+    fontFamily: 'Roboto Regular',
   },
   bold: {
     fontWeight: 'bold',
@@ -140,22 +162,43 @@ const styles = StyleSheet.create({
   },
   contactSection: {
     marginTop: 20,
+
   },
   contactTitle: {
     fontSize: 19,
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 8,
+    fontFamily: 'Roboto Regular',
   },
   contactItem: {
     fontSize: 14,
     color: '#fff',
     marginBottom: 4,
+    fontFamily: 'Roboto Regular',
   },
     locationText: {
         fontSize: 19,
         color: '#fff',
         marginBottom: 4,
         textAlign: 'left',
+        fontFamily: 'Roboto Regular',
     },
+    chooseButton: {
+      backgroundColor: '#365b37',
+      borderRadius: 20,
+      paddingVertical: 12,
+      paddingHorizontal: 20,
+      marginTop: 20,
+      alignSelf: 'center',
+    },
+    
+    chooseButtonText: {
+      color: '#fff',
+      fontSize: 14,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      fontFamily: 'Roboto Regular',
+    },
+    
 });
