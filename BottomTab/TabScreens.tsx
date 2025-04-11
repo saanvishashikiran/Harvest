@@ -1,5 +1,5 @@
 import Home from './Home';
-import CandidatesFeed from './CandidateFeed';
+import CandidatesFeed from '../screens/farmer/CandidateFeed';
 import Ratings from './Ratings';
 import Messages from './Messages';
 import { Image } from 'react-native';

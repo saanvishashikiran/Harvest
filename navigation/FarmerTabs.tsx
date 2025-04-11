@@ -1,9 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
-import JobsPage from "../screens/farmer/JobsPage";
+import JobsPage from "../screens/farmer/ActivePostsPage";
 import AddPage from "../screens/farmer/AddPage";
 import EmailPage from "../screens/EmailPage";
+import ActivePostsPage from "../screens/farmer/ActivePostsPage";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +21,7 @@ const FarmerTabs = () => {
     >
       <Tab.Screen
         name="Home"
-        component={JobsPage}
+        component={ActivePostsPage}
         options={{ 
           tabBarIcon: () => (
             <View style={styles.image}>
