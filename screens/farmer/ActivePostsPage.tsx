@@ -7,7 +7,7 @@ const ActivePostsPage = () => {
     return (
         <View>
             <View style={styles.image}>
-                <Image source={require('./../photos/Logo_Final.png')}/>
+                <Image source={require('../../photos/Logo_Final.png')}/>
             </View>
             <ScrollView contentContainerStyle = {{flexGrow: 1, justifyContent: 'space-between'}}>
                 <FarmerPost date = "3/20/20" position = {400} location = "Farmington, CT" pay = {2} jobDescription='You can pick anything you want'/>

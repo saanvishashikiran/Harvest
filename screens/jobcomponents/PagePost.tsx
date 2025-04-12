@@ -20,7 +20,7 @@ const PagePost = (props : CustomerProps) => {
         <View style= {styles.box}>
                 <View style={styles.header}> 
                     <View style = {{flex: 1, flexWrap: 'wrap', marginTop: 8, marginLeft: 10}}>
-                        <Image source={require('./../../photos/UserPhoto.png')}/>
+                        <Image source={require('../../photos/UserPhoto.png')}/>
                         <View style = {{marginTop: 7, marginLeft: 8}}>
                             <Text style = {styles.text}>username</Text>
                         </View>
@@ -40,7 +40,7 @@ const PagePost = (props : CustomerProps) => {
                     </View>
 
                     <View style = {{marginTop: 20, marginRight: 15}}>
-                        <Image source={require('./../../photos/MapOne.png')}/>
+                        <Image source={require('../../photos/MapOne.png')}/>
                     </View>
                 </View>
         </View>

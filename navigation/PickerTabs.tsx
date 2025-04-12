@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import JobsPage from "../screens/picker/JobsPage";
-import AddPage from "../screens/farmer/AddPage";
+import AddPostPage from "../screens/farmer/AddPostPage";
 import EmailPage from "../screens/EmailPage";
 
 const Tab = createBottomTabNavigator();
@@ -31,7 +31,7 @@ const PickerTabs = () => {
       />
       <Tab.Screen
         name="Add"
-        component={AddPage}
+        component={AddPostPage}
         options={{
           tabBarIcon: () => (
             <View style={{ marginTop: 25 }}>
