@@ -1,7 +1,11 @@
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Dimensions, SafeAreaView, Image} from 'react-native'
 import React, { useState } from 'react'
 import Modal from 'react-native-modal';
-import Profile from './Profile';
+import RateWorkerProfile from './RateWorkerProfile'; 
+import { useNavigation } from '@react-navigation/native';
+import { Alert } from 'react-native'; 
+
+
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -16,10 +20,11 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
   }));
    
 
-   export default function CandidatesFeed() {
+   export default function RateWorker() {
 
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedPicker, setSelectedPicker] = useState(null);
+    const navigation = useNavigation();
 
     const openProfile = (picker: any) => {
     setSelectedPicker(picker);
@@ -61,7 +66,7 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
               {renderStars(item.rating)}
             </View>
             <TouchableOpacity onPress={() => openProfile(item)} style={styles.button}>
-            <Text style={styles.buttonText}>See full profile</Text>
+            <Text style={styles.buttonText}>Rate worker</Text>
             </TouchableOpacity>
           </View>
         );
@@ -70,8 +75,16 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
      
       return (
         <SafeAreaView style={styles.container}>
+          
           <View style={{ flex: 1 }}>
-            <Image source={require('../assets/logo.png')} style={styles.logo} resizeMode="contain" />
+            <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                <Text style={styles.backButtonText}>←</Text>
+            </TouchableOpacity>
+            </View>
+            <View style={{ marginTop: 10 }}>
+              <Image source={require('../assets/logo.png')} style={styles.logo} resizeMode="contain" />
+            </View>
             <FlatList
               data={pickerData}
               renderItem={renderItem}
@@ -81,31 +94,42 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
             />
           </View>
           <Modal
-            isVisible={modalVisible}
-            onBackdropPress={closeProfile}
-            onSwipeComplete={closeProfile}
-            swipeDirection="down"
-            animationIn="slideInUp"     
-            animationOut="slideOutUp"      
-            animationInTiming={400}        
-            animationOutTiming={300}
-            backdropTransitionInTiming={200}
-            backdropTransitionOutTiming={200}
-            style={styles.modal}
-            >
-            {selectedPicker && (
-                <Profile data={selectedPicker} onClose={closeProfile} />
-            )}
-            </Modal>
+                isVisible={modalVisible}
+                onBackdropPress={closeProfile}
+                onSwipeComplete={closeProfile}
+                swipeDirection="down"
+                animationIn="slideInUp"     
+                animationOut="slideOutUp"      
+                animationInTiming={400}        
+                animationOutTiming={300}
+                backdropTransitionInTiming={200}
+                backdropTransitionOutTiming={200}
+                style={styles.modal}
+                >
+                {selectedPicker && (
+                    <RateWorkerProfile 
+                    worker={selectedPicker} 
+                    onClose={closeProfile} 
+                    isVisible={modalVisible} 
+                    onSubmit={() => {
+                        Alert.alert("Success", "Rating has been successfully recorded.");
+                        closeProfile();
+                    }}
+                    />
+                )}
+                </Modal>
+
         </SafeAreaView>
       );
      }
      const styles = StyleSheet.create({
-        container: { flex: 1, backgroundColor: '#e8f0e4' },
+        container: { flex: 1, backgroundColor: '#FFFFFF' },
         logo: {
-            width: 170, 
-            height: 70, 
-            alignSelf: 'center',
+          width: 170,
+          height: 70,
+          alignSelf: 'center',
+          marginTop: -45,          
+          marginBottom: 5,    
         },
         card: {
             width: windowWidth * 0.45,
@@ -119,9 +143,9 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
             shadowRadius: 3.84,
             elevation: 5,
         },
-        name: { fontSize: 16, fontWeight: 'bold', color: '#fff', marginBottom: 4, textAlign: 'center' },
-        location: { color: '#fff', fontSize: 12, textAlign: 'center' },
-        experience: { color: '#fff', marginBottom: 8, fontSize: 12, textAlign: 'center' },
+        name: { fontSize: 16, fontWeight: 'bold', color: '#fff', marginBottom: 4, textAlign: 'center', fontFamily: 'Roboto Regular'},
+        location: { color: '#fff', fontSize: 12, textAlign: 'center', fontFamily: 'Roboto Regular' },
+        experience: { color: '#fff', marginBottom: 8, fontSize: 12, textAlign: 'center', fontFamily: 'Roboto Regular' },
         stars: { flexDirection: 'row', marginBottom: 8 },
         button: {
             marginTop: 8,
@@ -131,7 +155,7 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
             borderRadius: 30,
             alignItems: 'center',
         },
-        buttonText: { color: '#fff', fontSize: 12 },
+        buttonText: { color: '#fff', fontSize: 12, fontFamily: 'Roboto Regular'},
         navBar: {
             flexDirection: 'row',
             justifyContent: 'space-around',
@@ -165,5 +189,26 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
             marginHorizontal: 0,
             marginBottom: 0,
           },
+          header: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: 12,
+            paddingTop: 10,
+          },
+          
+          backButton: {
+            marginRight: 10,
+            paddingVertical: 6,
+            paddingHorizontal: 8,
+            borderRadius: 8,
+            backgroundColor: '#B6C59D',
+          },
+          
+          backButtonText: {
+            fontSize: 14,
+            color: '#333',
+            fontFamily: 'Roboto Regular', 
+          },
+          
      });
              

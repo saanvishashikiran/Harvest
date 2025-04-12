@@ -1,14 +1,16 @@
 import Home from './Home';
-import CandidatesFeed from './CandidateFeed';
+import CandidatesFeed from '../screens/farmer/CandidateFeed';
 import Ratings from './Ratings';
 import Messages from './Messages';
-import Ionicons from '@react-native-vector-icons/ionicons';
+import { Image } from 'react-native';
+
 
 type screenType = {
     Home: undefined;
     CandidatesFeed: undefined;
     Ratings: undefined;
     Messages: undefined;
+    StackNav: undefined;
 };
 
 
@@ -23,11 +25,70 @@ const TabScreens = () => {
         tabBarInactiveTintColor: "#BCDAC6",
         headerShown: false,
         tabBarStyle: { backgroundColor: "#477943" },
+        tabBarShowLabel: false,
     }}>
-        <Tab.Screen name ="Home" component = {Home}/>
-        <Tab.Screen name ="CandidatesFeed" component = {CandidatesFeed}/>
-        <Tab.Screen name ="Ratings" component = {Ratings}/>
-        <Tab.Screen name ="Messages" component = {Messages}/>
+        <Tab.Screen
+            name="Home"
+            component={Home}
+            options={{
+              tabBarIcon: ({ focused }) => (
+                <Image
+                  source={require('../assets/home.png')}
+                  style={{
+                    width: 34, 
+                    height: 34,
+                    tintColor: focused ? '#F6F9F3' : '#BCDAC6',
+                    marginTop: 15,
+                  }}
+                />
+              ),
+            }}
+        />
+        <Tab.Screen name ="CandidatesFeed" component = {CandidatesFeed}
+        options={{
+              tabBarIcon: ({ focused }) => (
+                <Image
+                  source={require('../assets/feed.png')}
+                  style={{
+                    width: 34, 
+                    height: 34,
+                    tintColor: focused ? '#F6F9F3' : '#BCDAC6',
+                    marginTop: 15,
+                  }}
+                />
+              ),
+            }}
+        />
+        <Tab.Screen name ="Ratings" component = {Ratings}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={require('../assets/ratings.png')}
+              style={{
+                width: 32, 
+                height: 32,
+                tintColor: focused ? '#F6F9F3' : '#BCDAC6',
+                marginTop: 15,
+              }}
+            />
+          ),
+        }}
+    />
+        <Tab.Screen name ="Messages" component = {Messages}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={require('../assets/messages.png')}
+              style={{
+                width: 36, 
+                height: 36,
+                tintColor: focused ? '#F6F9F3' : '#BCDAC6',
+                marginTop: 15,
+              }}
+            />
+          ),
+        }}
+    />
 
 
     </Tab.Navigator>

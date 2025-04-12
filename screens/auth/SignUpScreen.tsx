@@ -84,7 +84,8 @@ console.log("auth.uid() at insert:", supabase.auth.getSession());
     );
   } else {
     console.log("✅ User profile inserted successfully!");
-    Alert.alert("Success", "Account created!");
+    Alert.alert("Success", "Account created! Please log in.");
+    navigation.navigate("Login");
   }
 
   setLoading(false);
@@ -112,6 +113,13 @@ console.log("auth.uid() at insert:", supabase.auth.getSession());
             onChangeText={setLastName}
           />
         </View>
+        <TextInput
+          style={styles.inputFull}
+          placeholder="Email"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+        />
         <View style={{ position: "relative" }}>
           <TextInput
             style={styles.inputFull}
@@ -128,14 +136,6 @@ console.log("auth.uid() at insert:", supabase.auth.getSession());
             <Text> {showPassword ? "🔒" : "👁️"} </Text>
           </TouchableOpacity>
         </View>
-        <TextInput
-          style={styles.inputFull}
-          placeholder="Email"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
-        />
-
         <Text style={styles.text}>Profile Picture</Text>
         <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
           {profileImage ? (
