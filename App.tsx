@@ -9,8 +9,8 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <PickerTabScreens />
-      {/*<FarmerStackNav />*/}
+      {/*<PickerTabScreens />*/}
+      <FarmerStackNav />
       {/*<StackNav />*/}
     </NavigationContainer>
   );

@@ -36,8 +36,8 @@ const FarmerTabScreens = () => {
                 <Image
                   source={require('../assets/home.png')}
                   style={{
-                    width: 34, 
-                    height: 34,
+                    width: 30, 
+                    height: 30,
                     tintColor: focused ? '#F6F9F3' : '#BCDAC6',
                     marginTop: 15,
                   }}
@@ -51,8 +51,8 @@ const FarmerTabScreens = () => {
             <Image
               source={require('../assets/clock.png')}
               style={{
-                width: 32, 
-                height: 32,
+                width: 30, 
+                height: 30,
                 tintColor: focused ? '#F6F9F3' : '#BCDAC6',
                 marginTop: 15,
               }}
@@ -66,8 +66,8 @@ const FarmerTabScreens = () => {
             <Image
               source={require('../assets/feed.png')}
               style={{
-                width: 36, 
-                height: 36,
+                width: 30, 
+                height: 30,
                 tintColor: focused ? '#F6F9F3' : '#BCDAC6',
                 marginTop: 15,
               }}
@@ -81,8 +81,8 @@ const FarmerTabScreens = () => {
             <Image
               source={require('../assets/user.png')}
               style={{
-                width: 34, 
-                height: 34,
+                width: 30, 
+                height: 30,
                 tintColor: focused ? '#F6F9F3' : '#BCDAC6',
                 marginTop: 15,
               }}
