@@ -8,7 +8,7 @@ import {
   Alert,
 } from "react-native";
 import React from "react";
-
+// FIX CSS 
 type CustomerProps = {
   date?: string;
   location?: string;
