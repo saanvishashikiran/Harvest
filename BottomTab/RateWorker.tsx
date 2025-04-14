@@ -1,5 +1,3 @@
-// RateWorker.tsx
-
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Dimensions, SafeAreaView, Image, Alert } from 'react-native';
 import React, { useState } from 'react';
 import Modal from 'react-native-modal';
