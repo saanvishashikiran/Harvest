@@ -47,7 +47,7 @@ const FarmerPersonalProfile = () => {
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 30 }}>
       <View style={styles.logoimage}>
-        <Image source={require("../../photos/Logo_Final.png")} />
+        <Image source={require("../../assets/logo.png")} style ={styles.logo} />
       </View>
       <View style={styles.image}>
         {profile ? (
@@ -213,6 +213,12 @@ const styles = StyleSheet.create({
     width: 130,
     height: 30,
     marginLeft: 135,
-    
+  },
+  logo: {
+    width: 150,
+    height: 50,
+    resizeMode: "contain",
+    marginBottom: 20,
+    alignSelf: "center",
   },
 });

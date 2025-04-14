@@ -12,6 +12,14 @@ import React from "react";
 import { supabase } from "../../lib/supabase";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
+// Weird bug with date time picker package that causes the date to be off by one day. 
+// function for workaround fix dont know if there could be any issues
+function adjustForTimezone(date: Date) {
+  const corrected = new Date(date);
+  corrected.setDate(corrected.getDate() - 1);
+  return corrected;
+}
+
 const AddPostPage = () => {
 
   const [title, setTitle] = React.useState("");
@@ -27,57 +35,94 @@ const AddPostPage = () => {
 
 
   const onStartDateChange = (event: any, selectedDate?: Date) => {
+    console.log("Start Date:", selectedDate);
     setShowStartDatePicker(false);
     if (selectedDate) setStartDate(selectedDate);
   };
 
   const onEndDateChange = (event: any, selectedDate?: Date) => {
+    console.log("End Date:", selectedDate);
     setShowEndDatePicker(false);
     if (selectedDate) setEndDate(selectedDate);
   };
 
 
 
-  const handleSubmit = async () => {
-    try {
-      if (!title || !description || !location || !availablePositions || !payRate ||!startDate || !endDate) {
-        Alert.alert("Error", "Please fill in all fields");
-        return;
-      }
-
-      const { data, error } = await supabase.from("posts").insert([
-        {
-          title: title,
-          start_date: startDate.toISOString().split("T")[0],
-          end_date: endDate.toISOString().split("T")[0],
-          available_positions: availablePositions,
-          pay_rate: payRate,
-          location: location,
-          description: description,
-          created_at: new Date().toISOString(),
-        },
-      ]);
-
-      if (error) {
-        console.error("Error inserting post:", error);
-        Alert.alert("Error", "Failed to create post. Please try again.");
-        return;
-      }
-
-      Alert.alert("Success", "Post created successfully!");
-
-      setTitle("");
-      setLocation("");
-    } catch (error) {
-      console.error("Unexpected error handling job post insertion:", error);
-      Alert.alert("Error", "An unexpected error occurred. Please try again.");
+const handleSubmit = async () => {
+  try {
+    // Check for empty required fields
+    if (
+      !title ||
+      !description ||
+      !location ||
+      !availablePositions ||
+      !payRate ||
+      !startDate ||
+      !endDate
+    ) {
+      Alert.alert("Error", "Please fill in all fields");
+      return;
     }
-  };
+
+    const positions = parseInt(availablePositions, 10);
+    const rate = parseInt(payRate, 10);
+
+    if (isNaN(positions) || isNaN(rate)) {
+      Alert.alert("Error", "Pay rate and available positions must be numbers");
+      return;
+    }
+
+    // correct off by one date
+    const correctedStartDate = adjustForTimezone(startDate);
+    const correctedEndDate = adjustForTimezone(endDate);
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    const farmerId = user?.id;
+
+
+    const { error } = await supabase.from("job_posts").insert([
+      {
+        title: title,
+        start_date: correctedStartDate.toISOString().split("T")[0],
+        end_date: correctedEndDate.toISOString().split("T")[0],
+        avaliable_positions: positions,
+        pay_rate: rate,
+        location: location,
+        description: description,
+        created_at: new Date().toISOString(),
+        farmer_id: farmerId,
+      },
+    ]);
+
+    if (error) {
+      console.error("Error inserting post:", error);
+      Alert.alert("Error", "Failed to create post. Please try again.");
+      return;
+    }
+
+    Alert.alert("Success", "Post created successfully!");
+
+    // Clear all fields
+    setTitle("");
+    setDescription("");
+    setLocation("");
+    setAvailablePositions("");
+    setPayRate("");
+    setStartDate(new Date());
+    setEndDate(new Date());
+  } catch (error) {
+    console.error("Unexpected error handling job post insertion:", error);
+    Alert.alert("Error", "An unexpected error occurred. Please try again.");
+  }
+};
+
   // ADD A TITLE FOR SAYIN ADD A POST PAGE OR SOMETHING LIKE THAT // ( i am in integration hell )
   return (
     <ScrollView>
       <View style={styles.logoimage}>
-        <Image source={require("../../assets/logo.png")} style ={styles.logo} />
+        <Image source={require("../../assets/logo.png")} style={styles.logo} />
       </View>
       <View style={styles.infoBox}>
         <Text style={styles.textStyled}>TITLE</Text>
@@ -114,8 +159,13 @@ const AddPostPage = () => {
         <Text style={styles.textStyled}>AVAILABLE POSITIONS</Text>
         <TextInput
           style={styles.textBox}
-          onChangeText={setAvailablePositions}
+          keyboardType="numeric"
           value={availablePositions}
+          onChangeText={(text) => {
+            if (/^\d*$/.test(text)) {
+              setAvailablePositions(text);
+            }
+          }}
           placeholder="Available Positions"
         />
       </View>
@@ -123,9 +173,14 @@ const AddPostPage = () => {
         <Text style={styles.textStyled}>PAY RATE</Text>
         <TextInput
           style={styles.textBox}
-          onChangeText={setPayRate}
+          keyboardType="numeric"
+          onChangeText={(text) => {
+            if (/^\d*$/.test(text)) {
+              setPayRate(text);
+            }
+          }}
           value={payRate}
-          placeholder="Pay Rate"
+          placeholder="Pay Rate per Hour"
         />
       </View>
       <View style={styles.infoBox}>
