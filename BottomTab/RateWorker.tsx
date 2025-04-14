@@ -10,7 +10,7 @@ import { Alert } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 
-const pickerData = Array.from({ length: 30 }, (_, i) => ({
+const pickerData = Array.from({ length: 5 }, (_, i) => ({
     id: (i + 1).toString(),
     name: `Picker ${i + 1}`,
     location: 'Washington, D.C.',
