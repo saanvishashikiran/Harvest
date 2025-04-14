@@ -1,5 +1,3 @@
-// RateWorker.tsx
-
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Dimensions, SafeAreaView, Image, Alert } from 'react-native';
 import React, { useState } from 'react';
 import Modal from 'react-native-modal';
@@ -13,7 +11,7 @@ const pickerData = Array.from({ length: 5 }, (_, i) => ({
   name: `Picker ${i + 1}`,
   location: 'Washington, D.C.',
   experience: Math.floor(Math.random() * 15) + 1,
-  rating: 0, // start with no stars filled
+  rating: 0, 
   coordinates: { lat: 38.9072 + i * 0.01, lng: -77.0369 + i * 0.01 },
 }));
 
@@ -90,7 +88,7 @@ export default function RateWorker() {
           </TouchableOpacity>
         </View>
         <View style={{ marginTop: 10 }}>
-          <Image source={require('../assets/logo.png')} style={styles.logo} resizeMode="contain" />
+          <Image source={require('../../../assets/logo.png')} style={styles.logo} resizeMode="contain" />
         </View>
         <FlatList
           data={pickerData}

@@ -1,6 +1,6 @@
-import JobsPage from './JobsPage';
-import MyJobs from './MyJobs';
-import PickerPersonalProfile from './PickerPersonalProfile';
+import JobsPage from './screens/picker/JobsPage';
+import MyJobs from './screens/picker/MyJobsPage';
+import PickerPersonalProfile from './screens/picker/PickerPersonalProfile';
 import { Image } from 'react-native';
 
 
@@ -16,7 +16,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator<screenType>();
 
-const TabScreens = () => {
+const PickerTabScreens = () => {
   return (
     <Tab.Navigator initialRouteName='JobsPage' screenOptions={{
         tabBarActiveTintColor: "#F6F9F3",
@@ -33,10 +33,10 @@ const TabScreens = () => {
                 <Image
                   source={require('../assets/home.png')}
                   style={{
-                    width: 34, 
-                    height: 34,
+                    width: 30, 
+                    height: 30,
                     tintColor: focused ? '#F6F9F3' : '#BCDAC6',
-                    marginTop: 15,
+                    marginTop: 20,
                   }}
                 />
               ),
@@ -46,12 +46,12 @@ const TabScreens = () => {
         options={{
               tabBarIcon: ({ focused }) => (
                 <Image
-                  source={require('../assets/feed.png')}
+                  source={require('../assets/briefcase.png')}
                   style={{
-                    width: 34, 
-                    height: 34,
+                    width: 30, 
+                    height: 30,
                     tintColor: focused ? '#F6F9F3' : '#BCDAC6',
-                    marginTop: 15,
+                    marginTop: 20,
                   }}
                 />
               ),
@@ -61,12 +61,12 @@ const TabScreens = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
-              source={require('../assets/ratings.png')}
+              source={require('../assets/user.png')}
               style={{
-                width: 32, 
-                height: 32,
+                width: 30, 
+                height: 30,
                 tintColor: focused ? '#F6F9F3' : '#BCDAC6',
-                marginTop: 15,
+                marginTop: 20,
               }}
             />
           ),
@@ -77,4 +77,4 @@ const TabScreens = () => {
   )
 }
 
-export default TabScreens
+export default PickerTabScreens
