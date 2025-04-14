@@ -1,7 +1,7 @@
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Dimensions, SafeAreaView, Image} from 'react-native'
 import React, { useState } from 'react'
 import Modal from 'react-native-modal';
-import Profile from './PickerProfile';
+import Profile from './Profile';
 
 
 const windowWidth = Dimensions.get('window').width;

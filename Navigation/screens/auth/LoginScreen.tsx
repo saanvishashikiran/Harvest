@@ -9,7 +9,7 @@ import {
   Image,
 } from "react-native";
 import { Button } from "react-native-paper";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "../../../lib/supabase";
 
 const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) =>{
   const [email, setEmail] = useState("");

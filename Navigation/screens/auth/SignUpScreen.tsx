@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Button } from "react-native-paper";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "../../../lib/supabase";
 
 
 const SignUpScreen: React.FC<{ navigation: any }> = ({ navigation }) => {

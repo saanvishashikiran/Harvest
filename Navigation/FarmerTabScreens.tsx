@@ -1,8 +1,8 @@
-import ActivePostsPage from '../Navigation/screens/farmer/ActivePostsPage';
+import ActivePostsPage from './screens/farmer/ActivePostsPage';
 
-import Ratings from '../Navigation/screens/farmer/Ratings';
-import AddPostPage from '../Navigation/screens/farmer/AddPostPage';
-import FarmerPersonalProfile from '../Navigation/screens/farmer/FarmerPersonalProfile';
+import Ratings from './screens/farmer/Ratings';
+import AddPostPage from './screens/farmer/AddPostPage';
+import FarmerPersonalProfile from './screens/farmer/FarmerPersonalProfile';
 import { Image } from 'react-native';
 
 
