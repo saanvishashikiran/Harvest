@@ -1,16 +1,17 @@
-import Home from './Home';
-import CandidatesFeed from '../screens/farmer/CandidateFeed';
-import Ratings from './Ratings';
-import Messages from './Messages';
+import ActivePostsPage from './screens/farmer/ActivePostsPage';
+
+import Ratings from './screens/farmer/Ratings';
+import AddPostPage from './screens/farmer/AddPostPage';
+import FarmerPersonalProfile from './screens/farmer/FarmerPersonalProfile';
 import { Image } from 'react-native';
 
 
 type screenType = {
-    Home: undefined;
-    CandidatesFeed: undefined;
+    ActivePostsPage: undefined;
+
     Ratings: undefined;
-    Messages: undefined;
-    StackNav: undefined;
+    AddPostPage: undefined;
+    FarmerPersonalProfile: undefined;
 };
 
 
@@ -18,9 +19,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator<screenType>();
 
-const TabScreens = () => {
+const FarmerTabScreens = () => {
   return (
-    <Tab.Navigator initialRouteName='CandidatesFeed' screenOptions={{
+    <Tab.Navigator initialRouteName='ActivePostsPage' screenOptions={{
         tabBarActiveTintColor: "#F6F9F3",
         tabBarInactiveTintColor: "#BCDAC6",
         headerShown: false,
@@ -28,30 +29,15 @@ const TabScreens = () => {
         tabBarShowLabel: false,
     }}>
         <Tab.Screen
-            name="Home"
-            component={Home}
+            name="ActivePostsPage"
+            component={ActivePostsPage}
             options={{
               tabBarIcon: ({ focused }) => (
                 <Image
                   source={require('../assets/home.png')}
                   style={{
-                    width: 34, 
-                    height: 34,
-                    tintColor: focused ? '#F6F9F3' : '#BCDAC6',
-                    marginTop: 15,
-                  }}
-                />
-              ),
-            }}
-        />
-        <Tab.Screen name ="CandidatesFeed" component = {CandidatesFeed}
-        options={{
-              tabBarIcon: ({ focused }) => (
-                <Image
-                  source={require('../assets/explore.png')}
-                  style={{
-                    width: 34, 
-                    height: 34,
+                    width: 30, 
+                    height: 30,
                     tintColor: focused ? '#F6F9F3' : '#BCDAC6',
                     marginTop: 15,
                   }}
@@ -65,8 +51,8 @@ const TabScreens = () => {
             <Image
               source={require('../assets/clock.png')}
               style={{
-                width: 32, 
-                height: 32,
+                width: 30, 
+                height: 30,
                 tintColor: focused ? '#F6F9F3' : '#BCDAC6',
                 marginTop: 15,
               }}
@@ -74,14 +60,29 @@ const TabScreens = () => {
           ),
         }}
     />
-        <Tab.Screen name ="Messages" component = {Messages}
+        <Tab.Screen name ="AddPostPage" component = {AddPostPage}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={require('../assets/feed.png')}
+              style={{
+                width: 30, 
+                height: 30,
+                tintColor: focused ? '#F6F9F3' : '#BCDAC6',
+                marginTop: 15,
+              }}
+            />
+          ),
+        }}
+    />
+        <Tab.Screen name ="FarmerPersonalProfile" component = {FarmerPersonalProfile}
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
               source={require('../assets/user.png')}
               style={{
-                width: 36, 
-                height: 36,
+                width: 30, 
+                height: 30,
                 tintColor: focused ? '#F6F9F3' : '#BCDAC6',
                 marginTop: 15,
               }}
@@ -89,10 +90,8 @@ const TabScreens = () => {
           ),
         }}
     />
-
-
     </Tab.Navigator>
   )
 }
 
-export default TabScreens
+export default FarmerTabScreens
