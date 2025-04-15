@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Pressable, Alert } from 'react-native';
 import React from "react"
+import { Title } from 'react-native-paper';
 
 type CustomerProps = {
+    title ? : string,
     date ? : string,
     location ?: string,
     position ?: number,
@@ -19,6 +21,8 @@ const Post = (props : CustomerProps) => {
     return (
         <View style= {styles.box}>
                 <View style={styles.header}> 
+
+
                     <View style = {{flex: 1, flexWrap: 'wrap', marginTop: 8, marginLeft: 10}}>
                         <Image source={require('../../../photos/UserPhoto.png')}/>
                         <View style = {{marginTop: 7, marginLeft: 8}}>
@@ -27,7 +31,9 @@ const Post = (props : CustomerProps) => {
                     </View>
                 </View>
 
-                <Text style = {styles.helpText}>Help Needed {props.date}!</Text>
+                <Text style = {styles.helpText}>Help Needed!</Text>
+                <Text style={styles.titleText}>{props.title}</Text>
+                <Text style={styles.dateText}>Date: {props.date}</Text>
 
                 <View style = {{flex: 1, flexWrap: 'wrap', alignContent: 'space-between', flexDirection: 'row'
                 }}>
@@ -39,7 +45,7 @@ const Post = (props : CustomerProps) => {
                         <Text style = {styles.miniBlack}>{props.jobDescription}</Text>
                     </View>
 
-                    <View style = {{marginTop: 10, marginRight: 15}}>
+                    <View style = {{marginTop: -15, marginRight: 15}}>
                         <Image source={require('../../../photos/MapOne.png')}/>
 
                         <TouchableOpacity onPress = {buttonPress} style = {styles.button}>
@@ -57,7 +63,7 @@ export default Post;
 const styles = StyleSheet.create({
     box : {
         width: 367,
-        height: 268,
+        height: 315,
         backgroundColor: "#F6F9F3",
         marginVertical: 10, 
         marginLeft: 12,
@@ -107,6 +113,20 @@ const styles = StyleSheet.create({
     },
     touch :{
         borderRadius: 20
-    }
+    },
+    titleText: {
+        fontSize: 18,
+        marginLeft: 15,
+        marginTop: 10,
+        fontWeight: "bold",
+        color: "#2D5015",
+      },
+      dateText: {
+        fontSize: 14,
+        marginLeft: 15,
+        marginBottom: 5,
+        color: "#555",
+      },
+      
 
 })

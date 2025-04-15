@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Pressable, Alert } fro
 import React from "react"
 
 type CustomerProps = {
+    title ? : string,
     date ? : string,
     location ?: string,
     position ?: number,
@@ -28,6 +29,8 @@ const PagePost = (props : CustomerProps) => {
                 </View>
 
                 <Text style = {styles.helpText}>Help Needed {props.date}!</Text>
+                <Text style={styles.titleText}>{props.title}</Text>
+                <Text style={styles.dateText}>Date: {props.date}</Text>
 
                 <View style = {{flex: 1, flexWrap: 'wrap', alignContent: 'space-between', flexDirection: 'row'
                 }}>
@@ -39,7 +42,7 @@ const PagePost = (props : CustomerProps) => {
                         <Text style = {styles.miniBlack}>{props.jobDescription}</Text>
                     </View>
 
-                    <View style = {{marginTop: 20, marginRight: 15}}>
+                    <View style = {{marginTop: -15, marginRight: 15}}>
                         <Image source={require('../../../photos/MapOne.png')}/>
                     </View>
                 </View>
@@ -52,7 +55,7 @@ export default PagePost;
 const styles = StyleSheet.create({
     box : {
         width: 367,
-        height: 268,
+        height: 315,
         backgroundColor: "#F6F9F3",
         marginVertical: 10, 
         marginLeft: 12,
@@ -102,6 +105,19 @@ const styles = StyleSheet.create({
     },
     touch :{
         borderRadius: 20
-    }
+    },
+    titleText: {
+        fontSize: 18,
+        marginLeft: 15,
+        marginTop: 10,
+        fontWeight: "bold",
+        color: "#2D5015",
+      },
+      dateText: {
+        fontSize: 14,
+        marginLeft: 15,
+        marginBottom: 5,
+        color: "#555",
+      },
 
 })

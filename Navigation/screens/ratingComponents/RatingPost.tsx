@@ -1,35 +1,25 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  Pressable,
-  Alert,
-} from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Image, TouchableOpacity, Pressable, Alert } from 'react-native';
+import React from "react"
 import {StackParamList} from '../../FarmerStackNav'; 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 
 type CustomerProps = {
-  title?: string;
-  date?: string;
-  location?: string;
-  position?: number;
-  pay?: number;
-  jobDescription?: string;
-  navigation: any;
-} 
-
-const buttonPress = () => {
-  Alert.alert("Button pressed!");
+    title ?: string,
+    date ? : string,
+    location ?: string,
+    position ?: number,
+    pay ?: number, 
+    jobDescription ?: string
+    navigation: any;
 };
 
-const FarmerPost = (props: CustomerProps) => {
+
+
+const RatingPost = (props : CustomerProps) => {
   const { navigation } = props;
-  const goToCandidateFeed = () => {
-    navigation.navigate('CandidateFeed');
+  const goToRateWorker = () => {
+    navigation.navigate('RateWorker');
 
   };
   return (
@@ -44,15 +34,12 @@ const FarmerPost = (props: CustomerProps) => {
           <View style={{ marginTop: 7, marginLeft: 8 }}>
             <Text style={styles.text}>username</Text>
           </View>
-          <TouchableOpacity onPress={buttonPress} style={styles.deleteButton}>
-            <Text style={{ fontSize: 25, color: "white" }}>x</Text>
-          </TouchableOpacity>
+
         </View>
       </View>
 
-      <Text style={styles.helpText}>Help Needed {props.date}!</Text>
       <Text style={styles.titleText}>{props.title}</Text>
-      <Text style={styles.dateText}>Date: {props.date}</Text>
+
 
       <View
         style={{
@@ -62,6 +49,7 @@ const FarmerPost = (props: CustomerProps) => {
           flexDirection: "row",
         }}
       >
+       
         <View style={{ flex: 1, marginLeft: 15, marginTop: 5 }}>
           <Text style={styles.miniGreen}>{props.location}</Text>
           <Text style={styles.miniBlack}>
@@ -75,11 +63,11 @@ const FarmerPost = (props: CustomerProps) => {
           <Text style={styles.miniBlack}>{props.jobDescription}</Text>
         </View>
 
-        <View style={{ marginTop: -15, marginRight: 15 }}>
+        <View style={{ marginTop: 12, marginRight: 15 }}>
           <Image source={require("../../../photos/MapOne.png")} />
 
-          <TouchableOpacity onPress = {goToCandidateFeed} style={styles.button}>
-            <Text style={styles.buttonText}>View Candidates</Text>
+          <TouchableOpacity onPress = {goToRateWorker} style={styles.button}>
+            <Text style={styles.buttonText}>Rate Candidates</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -88,12 +76,12 @@ const FarmerPost = (props: CustomerProps) => {
   );
 };
 
-export default FarmerPost;
+export default RatingPost;
 
 const styles = StyleSheet.create({
   box: {
     width: 367,
-    height: 315,
+    height: 268,
     backgroundColor: "#F6F9F3",
     marginVertical: 10,
     marginLeft: 12,

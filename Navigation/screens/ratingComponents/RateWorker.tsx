@@ -84,7 +84,10 @@ export default function RateWorker() {
       <View style={{ flex: 1 }}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <Text style={styles.backButtonText}>←</Text>
+          <Image
+                source={require('../../../assets/back.png')} 
+                style={styles.backIcon}
+              />
           </TouchableOpacity>
         </View>
         <View style={{ marginTop: 10 }}>
@@ -184,14 +187,15 @@ const styles = StyleSheet.create({
   },
   backButton: {
     marginRight: 10,
+    marginLeft: -8,
     paddingVertical: 6,
     paddingHorizontal: 8,
     borderRadius: 8,
-    backgroundColor: '#B6C59D',
   },
-  backButtonText: {
-    fontSize: 14,
-    color: '#333',
-    fontFamily: 'Roboto Regular',
+  backIcon: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
+    tintColor: '#2C5015',
   },
 });

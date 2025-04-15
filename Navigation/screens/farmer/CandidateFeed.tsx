@@ -2,6 +2,7 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, Dimensions, SafeAre
 import React, { useState } from 'react'
 import Modal from 'react-native-modal';
 import Profile from './Profile';
+import { useNavigation } from '@react-navigation/native';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -17,6 +18,8 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
    
 
    export default function CandidatesFeed() {
+
+    const navigation = useNavigation();
 
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedPicker, setSelectedPicker] = useState(null);
@@ -70,7 +73,15 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
      
       return (
         <SafeAreaView style={styles.container}>
-          <View style={{ flex: 1 }}>
+                  <View style={{ flex: 1 }}>
+                    <View style={styles.header}>
+                      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                          <Image
+                          source={require('../../../assets/back.png')} 
+                          style={styles.backIcon}
+                          />
+                      </TouchableOpacity>
+                    </View>
             <Image source={require('../../../assets/logo.png')} style={styles.logo} resizeMode="contain" />
             <FlatList
               data={pickerData}
@@ -106,7 +117,8 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
             width: 170, 
             height: 70, 
             alignSelf: 'center',
-            marginTop: 3,
+            marginTop: -40,
+            marginBottom: 5,
         },
         card: {
             width: windowWidth * 0.45,
@@ -165,6 +177,26 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
             marginTop: 50,  
             marginHorizontal: 0,
             marginBottom: 0,
+          },
+          header: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: 12,
+            paddingTop: 10,
+          },
+          backButton: {
+            marginRight: 10,
+            marginLeft: -8,
+            paddingVertical: 6,
+            paddingHorizontal: 8,
+            borderRadius: 8,
+
+          },
+          backIcon: {
+            width: 24,
+            height: 24,
+            resizeMode: 'contain',
+            tintColor: '#2C5015',
           },
      });
              
