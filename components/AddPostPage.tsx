@@ -20,36 +20,39 @@ const AddPostPage = () => {
             </View>
             <View style = {styles.bigbox}>
                 <View style = {styles.bigboxheader}>
-                    <Text style = {styles.bigboxtext}>Post</Text>
+                    <Text style = {styles.bigboxtext}>Create Post</Text>
             </View>
 
                 <ScrollView>
                     <View style = {{marginTop: 25, marginLeft: 20}}>
-                        <Text style = {styles.textStyled}>DATE</Text>
-                        <TextInput style = {styles.textBox} onChangeText = {nameChange} value = {name} placeholder = "Date" />
+                        <Text style = {styles.textStyled}>Title</Text>
+                        <TextInput style = {styles.textBox} onChangeText = {nameChange} value = {name} />
                     </View>
                     <View style = {styles.infoBox}>
-                        <Text style = {styles.textStyled}>AVAILABLE POSITIONS</Text>
-                        <TextInput style = {styles.textBox} onChangeText = {emailChange} value = {email} placeholder = "Available Positions" />
+                        <Text style = {styles.textStyled}>Date</Text>
+                        <TextInput style = {styles.textBox} onChangeText = {nameChange} value = {name} />
                     </View>
                     <View style = {styles.infoBox}>
-                        <Text style = {styles.textStyled}>PAY RATE</Text>
-                        <TextInput style = {styles.textBox} onChangeText = {experienceChange} value = {experience} placeholder = "Pay Rate" />
+                        <Text style = {styles.textStyled}>Available Positions</Text>
+                        <TextInput style = {styles.textBox} onChangeText = {emailChange} value = {email} />
                     </View>
                     <View style = {styles.infoBox}>
-                        <Text style = {styles.textStyled}>LOCATION</Text>
-                        <TextInput style = {styles.textBox} onChangeText = {locationChange} value = {location} placeholder = "Location" />
+                        <Text style = {styles.textStyled}>Pay Rate</Text>
+                        <TextInput style = {styles.textBox} onChangeText = {experienceChange} value = {experience} />
                     </View>
                     <View style = {styles.infoBox}>
-                        <Text style = {styles.textStyled}>DESCRIPTION</Text>
+                        <Text style = {styles.textStyled}>Location</Text>
+                        <TextInput style = {styles.textBox} onChangeText = {locationChange} value = {location} />
+                    </View>
+                    <View style = {styles.infoBox}>
+                        <Text style = {styles.textStyled}>Description</Text>
                         <TextInput style = {styles.descripBox} 
                             editable
                             multiline
                             numberOfLines = {4}
                             maxLength = {350}
                             onChangeText = {bioChange} 
-                            value = {bio} 
-                            placeholder = "Description" />
+                            value = {bio} />
                     </View>
                     <TouchableOpacity onPress = {buttonPress} style = {styles.button}>
                         <Text style = {styles.buttonText}>ADD</Text>
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
         height: 535,
         width: 340,
         marginTop: 10,
-        backgroundColor: '#F6F9F3',
+        backgroundColor: '#C9D9AF',
         marginLeft: 30,
         borderRadius: 10
     },
@@ -82,14 +85,14 @@ const styles = StyleSheet.create({
     bigboxtext: {
         color: 'white',
         fontSize: 25,
-        marginLeft: 145,
+        marginLeft: 105,
         marginTop: 8,
         fontWeight: 700,
         fontFamily: 'Roboto Regular'
     },
     textStyled: {
         fontSize: 15,
-        fontWeight: 500,
+        fontWeight: 700,
         color:  "#477943",
         fontFamily: 'Roboto Regular'
     },
@@ -100,7 +103,12 @@ const styles = StyleSheet.create({
         padding: 5,
         marginTop: 5,
         backgroundColor: 'white',
-        borderRadius: 7
+        borderRadius: 7,
+        borderTopWidth: 0,
+        borderEndWidth: 0,
+        borderRightWidth: 0,
+        borderLeftWidth: 0,
+        borderBottomWidth: 0
     },
     infoBox: {
         marginTop: 10,
@@ -153,6 +161,11 @@ const styles = StyleSheet.create({
         padding: 5,
         marginTop: 5,
         backgroundColor: 'white',
-        borderRadius: 7
+        borderRadius: 7,
+        borderTopWidth: 0,
+        borderEndWidth: 0,
+        borderRightWidth: 0,
+        borderLeftWidth: 0,
+        borderBottomWidth: 0
     }
 })

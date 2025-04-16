@@ -6,7 +6,7 @@ import PickerPersonalProfile from './components/PickerPersonalProfile';
 
 export default function App() {
   return (
-       <PickerPersonalProfile />
+       <PickerPersonalProfile rating = {5} />
   );
 }
 
