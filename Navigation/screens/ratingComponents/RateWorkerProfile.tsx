@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Modal from 'react-native-modal';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import Modal from "react-native-modal";
 
 type RateWorkerModalProps = {
   isVisible: boolean;
@@ -12,7 +12,12 @@ type RateWorkerModalProps = {
   };
 };
 
-export default function RateWorkerModal({ isVisible, onClose, onSubmit, worker }: RateWorkerModalProps) {
+export default function RateWorkerModal({
+  isVisible,
+  onClose,
+  onSubmit,
+  worker,
+}: RateWorkerModalProps) {
   const [selectedRating, setSelectedRating] = useState(0);
 
   const handleRate = (rating: number) => {
@@ -26,16 +31,21 @@ export default function RateWorkerModal({ isVisible, onClose, onSubmit, worker }
   };
 
   const getBackgroundColor = (experience: number) => {
-    if (experience >= 15) return '#5F8250';
-    else if (experience >= 10) return '#699866';
-    else if (experience >= 5) return '#8A9B6F';
-    else if (experience >= 2) return '#8ea37a';
-    else return '#B6C59D';
+    if (experience >= 15) return "#5F8250";
+    else if (experience >= 10) return "#699866";
+    else if (experience >= 5) return "#8A9B6F";
+    else if (experience >= 2) return "#8ea37a";
+    else return "#B6C59D";
   };
 
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose} style={styles.modal}>
-      <View style={[styles.container, { backgroundColor: getBackgroundColor(worker.experience) }]}>
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: getBackgroundColor(worker.experience) },
+        ]}
+      >
         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
           <Text style={styles.closeText}>✕</Text>
         </TouchableOpacity>
@@ -48,16 +58,25 @@ export default function RateWorkerModal({ isVisible, onClose, onSubmit, worker }
         <Text style={styles.prompt}>How would you rate this worker?</Text>
 
         <View style={styles.starsRow}>
-        {[1, 2, 3, 4, 5].map((num) => (
+          {[1, 2, 3, 4, 5].map((num) => (
             <TouchableOpacity key={num} onPress={() => handleRate(num)}>
-            <Text style={[styles.star, selectedRating >= num ? styles.filledStar : styles.emptyStar]}>★</Text>
+              <Text
+                style={[
+                  styles.star,
+                  selectedRating >= num ? styles.filledStar : styles.emptyStar,
+                ]}
+              >
+                ★
+              </Text>
             </TouchableOpacity>
-        ))}
+          ))}
         </View>
 
-
         <TouchableOpacity
-          style={[styles.submitButton, selectedRating === 0 && { backgroundColor: '#ccc' }]}
+          style={[
+            styles.submitButton,
+            selectedRating === 0 && { backgroundColor: "#ccc" },
+          ]}
           onPress={handleSubmit}
           disabled={selectedRating === 0}
         >
@@ -70,52 +89,52 @@ export default function RateWorkerModal({ isVisible, onClose, onSubmit, worker }
 
 const styles = StyleSheet.create({
   modal: {
-    justifyContent: 'center',
+    justifyContent: "center",
     margin: 0,
   },
   container: {
-    backgroundColor: '#6F7E4D',
+    backgroundColor: "#6F7E4D",
     borderRadius: 20,
     padding: 24,
     marginHorizontal: 24,
-    alignItems: 'center',
+    alignItems: "center",
   },
   closeButton: {
-    position: 'absolute',
+    position: "absolute",
     top: 12,
     right: 12,
   },
   closeText: {
     fontSize: 20,
-    color: '#fff',
-    fontFamily: 'Roboto Regular',
+    color: "#fff",
+    fontFamily: "Roboto Regular",
   },
   profileSection: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 20,
   },
   imagePlaceholder: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#ccc',
+    backgroundColor: "#ccc",
     marginBottom: 12,
   },
   name: {
     fontSize: 18,
-    color: '#fff',
-    fontWeight: 'bold',
-    fontFamily: 'Roboto Regular',
+    color: "#fff",
+    fontWeight: "bold",
+    fontFamily: "Roboto Regular",
   },
   prompt: {
     fontSize: 16,
-    color: '#fff',
+    color: "#fff",
     marginBottom: 12,
-    textAlign: 'center',
-    fontFamily: 'Roboto Regular',
+    textAlign: "center",
+    fontFamily: "Roboto Regular",
   },
   starsRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 20,
   },
   star: {
@@ -123,20 +142,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
   },
   filledStar: {
-    color: 'gold',
+    color: "gold",
   },
   emptyStar: {
-    color: 'lightgray',
+    color: "lightgray",
   },
   submitButton: {
-    backgroundColor: '#365b37',
+    backgroundColor: "#365b37",
     paddingVertical: 10,
     paddingHorizontal: 24,
     borderRadius: 12,
   },
   submitText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontFamily: 'Roboto Regular',
+    color: "#fff",
+    fontWeight: "bold",
+    fontFamily: "Roboto Regular",
   },
 });

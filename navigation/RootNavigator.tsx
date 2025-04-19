@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator } from "react-native";
 import { useAuth } from "../hooks/useAuth";
 import AuthNavigator from "./AuthNavigator";
-import FarmerTabs from "./FarmerTabs";
-import PickerTabs from "./PickerTabs";
+import PickerTabScreens from "./PickerTabScreens";
+import FarmerTabScreens from "./FarmerTabScreens";
 
 export default function RootNavigator() {
   const { user, role, loading } = useAuth();
@@ -23,9 +23,9 @@ export default function RootNavigator() {
     <NavigationContainer>
       {user ? (
         role === "farmer" ? (
-          <FarmerTabs />
+          <FarmerTabScreens />
         ) : role === "picker" ? (
-          <PickerTabs />
+          <PickerTabScreens />
         ) : (
           <>
             <AuthNavigator />

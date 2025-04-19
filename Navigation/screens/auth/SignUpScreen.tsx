@@ -94,7 +94,7 @@ console.log("auth.uid() at insert:", supabase.auth.getSession());
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../assets/logo.png")} style={styles.logo} />
+      <Image source={require("../../../assets/logo.png")} style={styles.logo} />
 
       <View style={styles.card}>
         <Text style={styles.title}>Sign Up</Text>
