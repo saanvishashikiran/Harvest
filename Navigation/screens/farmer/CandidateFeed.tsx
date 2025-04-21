@@ -24,7 +24,7 @@ const pickerData = Array.from({ length: 30 }, (_, i) => ({
   coordinates: { lat: 38.9072 + i * 0.01, lng: -77.0369 + i * 0.01 },
 }));
 
-export default function CandidatesFeed() {
+export default function CandidateFeed() {
   const navigation = useNavigation();
 
   const [modalVisible, setModalVisible] = useState(false);

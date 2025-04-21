@@ -16,18 +16,70 @@ type FarmerProps = {
   rating?: number;
 };
 
-const buttonPress = () => {
-  Alert.alert("Button pressed!");
-};
 
 const FarmerPersonalProfile = (props: FarmerProps) => {
-  const [name, nameChange] = React.useState("");
-  const [phoneNumber, phoneChange] = React.useState("");
-  const [email, emailChange] = React.useState("");
-  const [experience, experienceChange] = React.useState("");
-  const [location, locationChange] = React.useState("");
-  const [bio, bioChange] = React.useState("");
+  const [first_name, setFirstName] = React.useState("");
+  const [last_name, setLastName] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [profile, setImage] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const fetchProfile = async () => {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError || !user) return;
+
+      const uuid = user.id;
+
+      const { data: accountData, error: accountError } = await supabase
+        .from("accounts")
+        .select("first_name, last_name, phone, email")
+        .eq("uuid", uuid)
+        .single();
+
+      if (!accountError && accountData) {
+        setFirstName(accountData.first_name || "");
+        setLastName(accountData.last_name || "");
+        setPhone(accountData.phone || "");
+        setEmail(accountData.email || "");
+      }
+
+    };
+
+    fetchProfile();
+  }, []);
+const updateProfile = async () => {
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+  if (userError || !user) return;
+
+  const uuid = user.id;
+
+
+  const { error: updateError } = await supabase
+    .from("accounts")
+    .update({
+      first_name: first_name,
+      last_name: last_name,
+      phone: phone,
+      email: email,
+    })
+    .eq("uuid", uuid);
+
+  
+  if (!updateError) {
+    Alert.alert("Success", "Profile updated.");
+    console.log(phone, email, first_name, last_name);
+  } else {
+    Alert.alert("Error", "Could not update profile.");
+    console.log(updateError);
+  }
+};
 
   const changeImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -41,10 +93,18 @@ const FarmerPersonalProfile = (props: FarmerProps) => {
       setImage(result.assets[0].uri);
     }
   };
+
   const signOut = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    console.error("Sign out error:", error.message);
+    Alert.alert("Error signing out");
+  } else {
     Alert.alert("Signed out!");
-    await supabase.auth.signOut(); 
+  }
   };
+
+
   // FIX LOGO POSITIONING and other styling issues
   return (
     <View>
@@ -90,19 +150,31 @@ const FarmerPersonalProfile = (props: FarmerProps) => {
             <Text style={styles.photoButtonText}>Change Photo</Text>
           </TouchableOpacity>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>NAME</Text>
+            <Text style={styles.textStyled}>FIRST NAME</Text>
             <TextInput
               style={styles.textBox}
-              onChangeText={nameChange}
-              value={name}
+              onChangeText={setFirstName}
+              value={first_name}
+            />
+          </View>
+          <View style={styles.infoBox}>
+            <Text style={styles.textStyled}>LAST NAME</Text>
+            <TextInput
+              style={styles.textBox}
+              onChangeText={setLastName}
+              value={last_name}
             />
           </View>
           <View style={styles.infoBox}>
             <Text style={styles.textStyled}>PHONE NUMBER</Text>
             <TextInput
               style={styles.textBox}
-              onChangeText={phoneChange}
-              value={phoneNumber}
+              onChangeText={(text) => {
+                if (/^\d*$/.test(text)) {
+                  setPhone(text);
+                }
+              }}
+              value={phone}
               keyboardType="numeric"
             />
           </View>
@@ -110,44 +182,16 @@ const FarmerPersonalProfile = (props: FarmerProps) => {
             <Text style={styles.textStyled}>EMAIL</Text>
             <TextInput
               style={styles.textBox}
-              onChangeText={emailChange}
+              onChangeText={setEmail}
               value={email}
             />
           </View>
-          <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>YEARS OF EXPERIENCE</Text>
-            <TextInput
-              style={styles.textBox}
-              onChangeText={experienceChange}
-              value={experience}
-            />
-          </View>
-          <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>LOCATION</Text>
-            <TextInput
-              style={styles.textBox}
-              onChangeText={locationChange}
-              value={location}
-            />
-          </View>
-          <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>BIOGRAPHY</Text>
-            <TextInput
-              style={styles.descripBox}
-              editable
-              multiline
-              numberOfLines={4}
-              maxLength={350}
-              onChangeText={bioChange}
-              value={bio}
-            />
-          </View>
-          <TouchableOpacity onPress={buttonPress} style={styles.button}>
+          <TouchableOpacity onPress={updateProfile} style={styles.button}>
             <Text style={styles.buttonText}>UPDATE</Text>
           </TouchableOpacity>
-                <TouchableOpacity onPress={signOut} style={styles.signOutButton}>
-                  <Text style={styles.buttonText}>SIGN OUT</Text>
-                </TouchableOpacity>
+          <TouchableOpacity onPress={signOut} style={styles.signOutButton}>
+            <Text style={styles.buttonText}>SIGN OUT</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </View>
@@ -163,7 +207,8 @@ const styles = StyleSheet.create({
     marginTop: 15,
     width: 130,
     height: 30,
-    marginLeft: 135,
+    marginLeft: 110,
+    marginBottom: 20,
   },
   logo: {
     width: 170,

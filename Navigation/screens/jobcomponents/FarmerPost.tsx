@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React from "react";
 import { StackParamList } from "../../FarmerStackNav";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
 
 type CustomerProps = {
   farmerName?: string;
@@ -25,6 +25,7 @@ type CustomerProps = {
 const buttonPress = () => {
   Alert.alert("Button pressed!");
 };
+
 
 const FarmerPost = (props: CustomerProps) => {
   const { navigation } = props;

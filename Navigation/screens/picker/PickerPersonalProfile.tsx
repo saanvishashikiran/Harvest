@@ -22,12 +22,13 @@ const buttonPress = () => {
 };
 
 const PickerPersonalProfile = (props: PickerProps) => {
-  const [name, nameChange] = React.useState("");
-  const [phoneNumber, phoneChange] = React.useState("");
-  const [email, emailChange] = React.useState("");
-  const [experience, experienceChange] = React.useState("");
-  const [location, locationChange] = React.useState("");
-  const [bio, bioChange] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [experience, setExperience] = React.useState("");
+  const [location, setLocation] = React.useState("");
+  const [bio, setBio] = React.useState("");
   const [profile, setImage] = React.useState<string | null>(null);
   const [open, isOpen] = React.useState(false);
   const [value, setValue] = React.useState(null);
@@ -57,7 +58,46 @@ const PickerPersonalProfile = (props: PickerProps) => {
     Alert.alert("Signed out!");
     await supabase.auth.signOut(); 
   };
-  
+  React.useEffect(() => {
+    const fetchProfile = async () => {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError || !user) return;
+
+      const uuid = user.id;
+
+      // Fetch account info
+      const { data: accountData, error: accountError } = await supabase
+        .from("accounts")
+        .select("first_name, last_name, phone, email, location, experience, bio")
+        .eq("uuid", uuid)
+        .single();
+      console.log("Account data:", accountData);
+      if (!accountError && accountData) {
+        setFirstName(accountData.first_name || "");
+        setLastName(accountData.last_name || "");
+        setPhone(accountData.phone || "");
+        setEmail(accountData.email || "");
+      }
+
+      // Fetch skill
+      const { data: skillData } = await supabase
+        .from("skills")
+        .select("skill")
+        .eq("picker_id", uuid)
+        .maybeSingle();
+        console.log("Skill data:", skillData);
+
+      if (skillData) {
+        setValue(skillData.skill);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
   return (
     <View>
       <View style={styles.logoimage}>
@@ -102,19 +142,27 @@ const PickerPersonalProfile = (props: PickerProps) => {
             <Text style={styles.photoButtonText}>Change Photo</Text>
           </TouchableOpacity>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>NAME</Text>
+            <Text style={styles.textStyled}>FIRST NAME</Text>
             <TextInput
               style={styles.textBox}
-              onChangeText={nameChange}
-              value={name}
+              onChangeText={setFirstName}
+              value={firstName}
+            />
+          </View>
+          <View style={styles.infoBox}>
+            <Text style={styles.textStyled}>LAST NAME</Text>
+            <TextInput
+              style={styles.textBox}
+              onChangeText={setLastName}
+              value={lastName}
             />
           </View>
           <View style={styles.infoBox}>
             <Text style={styles.textStyled}>PHONE NUMBER</Text>
             <TextInput
               style={styles.textBox}
-              onChangeText={phoneChange}
-              value={phoneNumber}
+              onChangeText={setPhone}
+              value={phone}
               keyboardType="numeric"
             />
           </View>
@@ -122,7 +170,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
             <Text style={styles.textStyled}>EMAIL</Text>
             <TextInput
               style={styles.textBox}
-              onChangeText={emailChange}
+              onChangeText={setEmail}
               value={email}
             />
           </View>
@@ -130,7 +178,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
             <Text style={styles.textStyled}>EXPERIENCE</Text>
             <TextInput
               style={styles.textBox}
-              onChangeText={experienceChange}
+              onChangeText={setExperience}
               value={experience}
             />
           </View>
@@ -138,7 +186,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
             <Text style={styles.textStyled}>LOCATION</Text>
             <TextInput
               style={styles.textBox}
-              onChangeText={locationChange}
+              onChangeText={setLocation}
               value={location}
             />
           </View>
@@ -164,7 +212,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
               multiline
               numberOfLines={4}
               maxLength={350}
-              onChangeText={bioChange}
+              onChangeText={setBio}
               value={bio}
             />
           </View>
@@ -189,7 +237,8 @@ const styles = StyleSheet.create({
     marginTop: 15,
     width: 130,
     height: 30,
-    marginLeft: 135,
+    marginLeft: 110,
+    marginBottom: 20,
   },
   logo: {
     width: 170,

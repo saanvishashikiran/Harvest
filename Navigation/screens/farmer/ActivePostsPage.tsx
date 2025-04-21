@@ -58,7 +58,8 @@ const ActivePostsPage = () => {
         useEffect(() => {
             fetchJobPosts();}, []);
     const navigation = useNavigation<NavigationProp>();
-
+//fix ugly title for the page
+//fix inconsistent spacing and also logo 
   return (
     <View style={styles.container}>
       <ScrollView
@@ -74,6 +75,7 @@ const ActivePostsPage = () => {
             resizeMode="contain"
           />
         </View>
+        
         <Text style={styles.pageTitle}>My Active Posts</Text>
         {loading ? (
           <Text style={{ textAlign: "center" }}>Loading jobs...</Text>
@@ -90,7 +92,7 @@ const ActivePostsPage = () => {
               location={post.location}
               pay={post.pay_rate}
               jobDescription={post.description}
-              navigation={undefined}
+              navigation={navigation}
               farmerName={
                 farmerName
                   ? `${farmerName.first_name} ${farmerName.last_name}`
@@ -112,10 +114,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   scroll: {
-    paddingTop: 20,
-    paddingBottom: 40,
-    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingTop: 30,
+    paddingBottom: 50,
     backgroundColor: "#FFFFFF",
+    alignItems: "center",
   },
   imageContainer: {
     alignItems: "center",
