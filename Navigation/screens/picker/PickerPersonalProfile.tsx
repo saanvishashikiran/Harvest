@@ -118,26 +118,19 @@ const PickerPersonalProfile = (props: PickerProps) => {
         last_name: lastName,
         phone: phone,
         email: email,
-
+        skill: value,
         location: location,
         experience: experience,
         bio: bio,
       })
       .eq("uuid", uuid);
 
- const { error: skillError } = await supabase.from("skills").upsert(
-   {
-     picker_id: uuid,
-     skill: value,
-   },
-   { onConflict: "picker_id,skill" } // ✅ as a string
- );
 
-    if (!updateError && !skillError) {
+    if (!updateError) {
       Alert.alert("Success", "Profile updated.");
     } else {
       Alert.alert("Error", "Could not update profile.");
-      console.log(updateError, skillError);
+      console.log(updateError);
     }
   };
 
@@ -259,7 +252,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
               value={bio}
             />
           </View>
-          <TouchableOpacity onPress={buttonPress} style={styles.button}>
+          <TouchableOpacity onPress={updateProfile} style={styles.button}>
             <Text style={styles.buttonText}>UPDATE</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={signOut} style={styles.signOutButton}>
