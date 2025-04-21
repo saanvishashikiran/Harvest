@@ -74,7 +74,9 @@ const PickerPersonalProfile = (props: PickerProps) => {
         .select("first_name, last_name, phone, email, location, experience, bio")
         .eq("uuid", uuid)
         .single();
+
       console.log("Account data:", accountData);
+
       if (!accountError && accountData) {
         setFirstName(accountData.first_name || "");
         setLastName(accountData.last_name || "");
@@ -88,6 +90,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
         .select("skill")
         .eq("picker_id", uuid)
         .maybeSingle();
+
         console.log("Skill data:", skillData);
 
       if (skillData) {
@@ -97,6 +100,46 @@ const PickerPersonalProfile = (props: PickerProps) => {
 
     fetchProfile();
   }, []);
+
+  const updateProfile = async () => {
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+    if (userError || !user) return;
+
+    const uuid = user.id;
+
+    // Update account info
+    const { error: updateError } = await supabase
+      .from("accounts")
+      .update({
+        first_name: firstName,
+        last_name: lastName,
+        phone: phone,
+        email: email,
+
+        location: location,
+        experience: experience,
+        bio: bio,
+      })
+      .eq("uuid", uuid);
+
+ const { error: skillError } = await supabase.from("skills").upsert(
+   {
+     picker_id: uuid,
+     skill: value,
+   },
+   { onConflict: "picker_id,skill" } // ✅ as a string
+ );
+
+    if (!updateError && !skillError) {
+      Alert.alert("Success", "Profile updated.");
+    } else {
+      Alert.alert("Error", "Could not update profile.");
+      console.log(updateError, skillError);
+    }
+  };
 
   return (
     <View>
