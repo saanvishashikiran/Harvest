@@ -81,7 +81,7 @@ const handleSubmit = async () => {
         title: title,
         start_date: correctedStartDate.toISOString().split("T")[0],
         end_date: correctedEndDate.toISOString().split("T")[0],
-        avaliable_positions: positions,
+        available_positions: positions,
         pay_rate: rate,
         location: location,
         description: description,

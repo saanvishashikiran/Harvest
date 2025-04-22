@@ -11,12 +11,14 @@ import React from "react";
 import { Title } from "react-native-paper";
 
 type CustomerProps = {
+  farmerName?: string;
   title?: string;
   date?: string;
   location?: string;
   position?: number;
   pay?: number;
   jobDescription?: string;
+  job_id?: number;
 };
 
 const buttonPress = () => {
@@ -32,7 +34,7 @@ const Post = (props: CustomerProps) => {
         >
           <Image source={require("../../../photos/UserPhoto.png")} />
           <View style={{ marginTop: 7, marginLeft: 8 }}>
-            <Text style={styles.text}>username</Text>
+            <Text style={styles.text}>{props.farmerName || "Farm Owner"}</Text>
           </View>
         </View>
       </View>

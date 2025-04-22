@@ -17,7 +17,6 @@ const ActivePostsPage = () => {
       last_name: string;
     } | null>(null);
 
-
     const onRefresh = async () => {
         setRefreshing(true);
         await fetchJobPosts();
@@ -43,8 +42,7 @@ const ActivePostsPage = () => {
             setFarmerName(farmerData);
             }
             const { data, error } = await supabase
-                .from("job_posts")
-                .select("*")
+                .from("job_posts")                .select("*")
                 .eq("farmer_id", farmerId)
                 .order("created_at", { ascending: false });;
             if (error) {
@@ -76,7 +74,6 @@ const ActivePostsPage = () => {
           />
         </View>
         
-        <Text style={styles.pageTitle}>My Active Posts</Text>
         {loading ? (
           <Text style={{ textAlign: "center" }}>Loading jobs...</Text>
         ) : posts.length === 0 ? (
@@ -88,8 +85,9 @@ const ActivePostsPage = () => {
             <FarmerPost
               key={post.post_id}
               date={new Date(post.start_date).toLocaleDateString()}
-              position={post.available_positions}
+              avaliable_positions={post.available_positions}
               location={post.location}
+              title = {post.title}
               pay={post.pay_rate}
               jobDescription={post.description}
               navigation={navigation}
