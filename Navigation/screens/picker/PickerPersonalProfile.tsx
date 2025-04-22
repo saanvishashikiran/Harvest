@@ -82,20 +82,11 @@ const PickerPersonalProfile = (props: PickerProps) => {
         setLastName(accountData.last_name || "");
         setPhone(accountData.phone || "");
         setEmail(accountData.email || "");
+        setExperience(accountData.experience?.toString() || "");
+        setLocation(accountData.location || "");
+        setBio(accountData.bio || "");
       }
 
-      // Fetch skill
-      const { data: skillData } = await supabase
-        .from("skills")
-        .select("skill")
-        .eq("picker_id", uuid)
-        .maybeSingle();
-
-        console.log("Skill data:", skillData);
-
-      if (skillData) {
-        setValue(skillData.skill);
-      }
     };
 
     fetchProfile();
@@ -214,8 +205,13 @@ const PickerPersonalProfile = (props: PickerProps) => {
             <Text style={styles.textStyled}>EXPERIENCE</Text>
             <TextInput
               style={styles.textBox}
-              onChangeText={setExperience}
+              onChangeText={(text) => {
+                if (/^\d*$/.test(text)) {
+                  setExperience(text);
+                }
+              }}
               value={experience}
+              keyboardType="numeric"
             />
           </View>
           <View style={styles.infoBox}>
