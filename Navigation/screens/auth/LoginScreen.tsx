@@ -9,7 +9,7 @@ import {
   Image,
 } from "react-native";
 import { Button } from "react-native-paper";
-import { supabase } from "../../lib/supabase";
+import { supabase } from "../../../lib/supabase";
 
 const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) =>{
   const [email, setEmail] = useState("");
@@ -32,7 +32,6 @@ const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) =>{
       Alert.alert("Login Failed", error.message);
     } else {
       Alert.alert("Success", "Logged in successfully!");
-      // TODO: navigate to your main screen if using navigation
     }
 
     setLoading(false);
@@ -40,7 +39,7 @@ const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) =>{
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../assets/logo.png")} style={styles.logo} />
+      <Image source={require("../../../assets/logo.png")} style={styles.logo} />
       <View style={styles.card}>
         <Text style={styles.title}>Log In</Text>
 

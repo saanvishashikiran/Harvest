@@ -8,37 +8,38 @@ import {
   Alert,
 } from "react-native";
 import React from "react";
+import { StackParamList } from "../../FarmerStackNav";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 type CustomerProps = {
+  title?: string;
   date?: string;
   location?: string;
   position?: number;
   pay?: number;
   jobDescription?: string;
+  navigation: any;
 };
 
-const buttonPress = () => {
-  Alert.alert("Button pressed!");
-};
-
-const FarmerPost = (props: CustomerProps) => {
+const RatingPost = (props: CustomerProps) => {
+  const { navigation } = props;
+  const goToRateWorker = () => {
+    navigation.navigate("RateWorker");
+  };
   return (
     <View style={styles.box}>
       <View style={styles.header}>
         <View
           style={{ flex: 1, flexWrap: "wrap", marginTop: 8, marginLeft: 10 }}
         >
-          <Image source={require("../../photos/UserPhoto.png")} />
+          <Image source={require("../../../photos/UserPhoto.png")} />
           <View style={{ marginTop: 7, marginLeft: 8 }}>
             <Text style={styles.text}>username</Text>
           </View>
-          <TouchableOpacity onPress={buttonPress} style={styles.deleteButton}>
-            <Text style={{ fontSize: 25, color: "white" }}>x</Text>
-          </TouchableOpacity>
         </View>
       </View>
 
-      <Text style={styles.helpText}>Help Needed {props.date}!</Text>
+      <Text style={styles.titleText}>{props.title}</Text>
 
       <View
         style={{
@@ -61,11 +62,11 @@ const FarmerPost = (props: CustomerProps) => {
           <Text style={styles.miniBlack}>{props.jobDescription}</Text>
         </View>
 
-        <View style={{ marginTop: 10, marginRight: 15 }}>
-          <Image source={require("../../photos/MapOne.png")} />
+        <View style={{ marginTop: 12, marginRight: 15 }}>
+          <Image source={require("../../../photos/MapOne.png")} />
 
-          <TouchableOpacity onPress={buttonPress} style={styles.button}>
-            <Text style={styles.buttonText}>View Candidates</Text>
+          <TouchableOpacity onPress={goToRateWorker} style={styles.button}>
+            <Text style={styles.buttonText}>Rate Candidates</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -73,7 +74,7 @@ const FarmerPost = (props: CustomerProps) => {
   );
 };
 
-export default FarmerPost;
+export default RatingPost;
 
 const styles = StyleSheet.create({
   box: {
@@ -129,5 +130,18 @@ const styles = StyleSheet.create({
   deleteButton: {
     marginLeft: 205,
     marginTop: 1,
+  },
+  titleText: {
+    fontSize: 18,
+    marginLeft: 15,
+    marginTop: 10,
+    fontWeight: "bold",
+    color: "#2D5015",
+  },
+  dateText: {
+    fontSize: 14,
+    marginLeft: 15,
+    marginBottom: 5,
+    color: "#555",
   },
 });

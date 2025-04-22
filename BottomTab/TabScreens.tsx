@@ -48,7 +48,7 @@ const TabScreens = () => {
         options={{
               tabBarIcon: ({ focused }) => (
                 <Image
-                  source={require('../assets/feed.png')}
+                  source={require('../assets/explore.png')}
                   style={{
                     width: 34, 
                     height: 34,
@@ -63,7 +63,7 @@ const TabScreens = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
-              source={require('../assets/ratings.png')}
+              source={require('../assets/clock.png')}
               style={{
                 width: 32, 
                 height: 32,
@@ -78,7 +78,7 @@ const TabScreens = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
-              source={require('../assets/messages.png')}
+              source={require('../assets/user.png')}
               style={{
                 width: 36, 
                 height: 36,
