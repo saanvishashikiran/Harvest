@@ -17,9 +17,7 @@ type PickerProps = {
   rating?: number;
 };
 
-const buttonPress = () => {
-  Alert.alert("Button pressed!");
-};
+
 
 const PickerPersonalProfile = (props: PickerProps) => {
   const [firstName, setFirstName] = React.useState("");

@@ -32,7 +32,7 @@ const FarmerPost = (props: CustomerProps) => {
   const { navigation } = props;
   console.log("FarmerPost props:", props.post_id);
   const goToCandidateFeed = () => {
-    navigation.navigate("CandidateFeed", { postId: props.post_id });
+  navigation.navigate("CandidateFeed", { postId: props.post_id });
 
   };
   return (
