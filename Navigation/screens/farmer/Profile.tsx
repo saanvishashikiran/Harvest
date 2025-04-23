@@ -1,9 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import { supabase } from "../../../lib/supabase";
 
 type ProfileProps = {
   data: {
+    pickerId: string;
+    postId: string;
     name: string;
     experience: number;
     location: string;
@@ -18,7 +21,7 @@ type ProfileProps = {
 };
 
 export default function Profile({ data, onClose }: ProfileProps) {
-  const { name, experience, location, rating, coordinates, email, phone, bio, skill, } = data;
+  const { name, experience, location, rating, coordinates, email, phone, bio, skill, pickerId, postId} = data;
 
   const renderStars = (count: number) =>
     Array.from({ length: 5 }, (_, i) => (
@@ -37,6 +40,61 @@ export default function Profile({ data, onClose }: ProfileProps) {
     else if (experience >= 2) return "#8ea37a";
     else return "#B6C59D";
   };
+const chooseCandidate = async (pickerId: string, postId: string) => {
+
+  const { data: existing, error: checkError } = await supabase
+    .from("job_applications")
+    .select("status")
+    .eq("picker_id", pickerId)
+    .eq("job_id", postId)
+    .single();
+
+  if (checkError) {
+    console.error("Error checking application status:", checkError);
+    return;
+  }
+
+  if (existing?.status === "accepted") {
+    Alert.alert("Already Accepted", "You’ve already accepted this candidate.");
+    return;
+  }
+
+  const { error: updateError } = await supabase
+    .from("job_applications")
+    .update({ status: "accepted" })
+    .eq("picker_id", pickerId)
+    .eq("job_id", postId);
+
+  if (updateError) {
+    console.error("Failed to update application status:", updateError);
+    return;
+  }
+
+  const { data: post, error: postError } = await supabase
+    .from("job_posts")
+    .select("available_positions")
+    .eq("post_id", postId)
+    .single();
+
+  if (postError || !post) {
+    console.error("Error fetching job post:", postError);
+    return;
+  }
+
+  const updatedCount = Math.max(0, post.available_positions - 1);
+
+  const { error: updatePostError } = await supabase
+    .from("job_posts")
+    .update({ available_positions: updatedCount })
+    .eq("post_id", postId);
+
+  if (updatePostError) {
+    console.error("Error updating job post:", updatePostError);
+    return;
+  }
+
+  Alert.alert("Success", "Candidate has been accepted!");
+};
 
   return (
     <View
@@ -95,9 +153,7 @@ export default function Profile({ data, onClose }: ProfileProps) {
       </View>
 
       <TouchableOpacity
-        onPress={() =>
-          Alert.alert("Success", "Candidate has been successfully chosen")
-        }
+        onPress={() => chooseCandidate(data.pickerId, data.postId)}
         style={styles.chooseButton}
       >
         <Text style={styles.chooseButtonText}>Choose Candidate</Text>

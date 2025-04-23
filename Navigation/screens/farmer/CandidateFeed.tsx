@@ -115,7 +115,8 @@ console.log("Fetched applicants:", data);
     console.error("Error fetching applicants:", error);
   } else {
     const mapped = data.map((entry) => ({
-      id: entry.picker_id,
+      pickerId: entry.picker_id,
+      postId: postId,
       name: `${entry.accounts.first_name} ${entry.accounts.last_name}`,
       location: entry.accounts.location,
       experience: entry.accounts.experience,

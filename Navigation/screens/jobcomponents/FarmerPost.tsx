@@ -64,7 +64,7 @@ const FarmerPost = (props: CustomerProps) => {
         <View style={{ flex: 1, marginLeft: 15, marginTop: 5 }}>
           <Text style={styles.miniGreen}>{props.location}</Text>
           <Text style={styles.miniBlack}>
-            Available Positions: <Text style={{ fontWeight: "700" }}>{props.avaliable_positions}</Text>
+            Available Positions: <Text style={{ fontWeight: "700" }}>{props.available_positions}</Text>
           </Text>
           <Text style={styles.miniBlack}>
             Pay Rate: <Text style={{ fontWeight: "700" }}>${props.pay}/hr</Text>

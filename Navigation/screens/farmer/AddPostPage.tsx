@@ -113,7 +113,7 @@ const handleSubmit = async () => {
 
 // need to fix not being able to see the text box when typing in it bc the keyboard is up
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       <View style={styles.image}>
         <Image
           source={require("../../../assets/logo.png")}
@@ -212,7 +212,6 @@ const handleSubmit = async () => {
             />
           </View>
           <View style={styles.infoBox}>
-          
             <Text style={styles.textStyled}>Description</Text>
             <TextInput
               style={styles.descripBox}
@@ -259,7 +258,7 @@ const styles = StyleSheet.create({
   image: {
     marginTop: 50,
     marginLeft: 110,
-    marginBottom: 32,
+    marginBottom: 20,
     width: 178,
     height: 40,
   },
@@ -267,6 +266,7 @@ const styles = StyleSheet.create({
     width: 170,
     height: 70,
     marginBottom: 0,
+    marginTop: -10,
   },
   bigbox: {
     height: 535,
