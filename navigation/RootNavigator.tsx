@@ -19,7 +19,6 @@ export type StackParamList = {
 const Stack = createNativeStackNavigator<StackParamList>();
 export default function RootNavigator() {
   const { user, role, loading } = useAuth();
-
   if (loading) return <ActivityIndicator size="large" style={{ flex: 1 }} />;
 
   return (
