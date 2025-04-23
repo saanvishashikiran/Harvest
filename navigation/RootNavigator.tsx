@@ -8,8 +8,15 @@ import { ActivityIndicator } from "react-native-paper";
 import { useAuth } from "../hooks/useAuth";
 import RateWorker from "./screens/ratingComponents/RateWorker"; 
 
-const Stack = createNativeStackNavigator();
 
+export type StackParamList = {
+  CandidateFeed: { postId: string };
+  FarmerTabs: undefined;
+  PickerTabs: undefined;
+  Auth: undefined;
+  RateWorker: undefined;
+};
+const Stack = createNativeStackNavigator<StackParamList>();
 export default function RootNavigator() {
   const { user, role, loading } = useAuth();
 

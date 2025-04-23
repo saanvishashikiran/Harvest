@@ -71,7 +71,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
       // Fetch account info
       const { data: accountData, error: accountError } = await supabase
         .from("accounts")
-        .select("first_name, last_name, phone, email, location, experience, bio")
+        .select("first_name, last_name, phone, email, location, experience, bio,skill")
         .eq("uuid", uuid)
         .single();
 
@@ -85,6 +85,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
         setExperience(accountData.experience?.toString() || "");
         setLocation(accountData.location || "");
         setBio(accountData.bio || "");
+        setValue(accountData.skill || null);
       }
 
     };

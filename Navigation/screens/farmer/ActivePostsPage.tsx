@@ -48,10 +48,10 @@ const ActivePostsPage = () => {
             if (error) {
                 console.error("Error fetching job posts:", error);
             } else {
-                console.log("Fetched job posts:", data);
                 setPosts(data);
             }
             setLoading(false);
+            
         };
         useEffect(() => {
             fetchJobPosts();}, []);
@@ -85,7 +85,7 @@ const ActivePostsPage = () => {
             <FarmerPost
               key={post.post_id}
               date={new Date(post.start_date).toLocaleDateString()}
-              avaliable_positions={post.available_positions}
+              available_positions={post.available_positions}
               location={post.location}
               title = {post.title}
               pay={post.pay_rate}
@@ -96,6 +96,7 @@ const ActivePostsPage = () => {
                   ? `${farmerName.first_name} ${farmerName.last_name}`
                   : ""
               }
+              post_id={post.post_id}
             />
           ))
         )}

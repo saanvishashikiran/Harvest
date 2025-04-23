@@ -75,9 +75,9 @@ const { data, error } = await supabase
         }
       >
         {loading ? (
-          <Text>Loading jobs...</Text>
+          <Text style = {styles.centeredText}>Loading jobs...</Text>
         ) : jobs.length === 0 ? (
-          <Text>No jobs available right now.</Text>
+          <Text style = {styles.centeredText}>No jobs available right now.</Text>
         ) : (
           jobs.map((job) => (
             <Post
@@ -101,6 +101,12 @@ const { data, error } = await supabase
 export default JobsPage;
 
 const styles = StyleSheet.create({
+  centeredText: {
+    textAlign: "center",
+    marginTop: 40,
+    fontSize: 16,
+    color: "#444",
+  },
   scroll: {},
   imageContainer: {
     marginTop: 3,

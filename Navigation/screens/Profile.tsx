@@ -9,12 +9,26 @@ type ProfileProps = {
     location: string;
     rating: number;
     coordinates: { lat: number; lng: number };
+    email: string;
+    phone: string;
+    bio: string;
+    skills: string;
   };
   onClose: () => void;
 };
 
 export default function Profile({ data, onClose }: ProfileProps) {
-  const { name, experience, location, rating, coordinates } = data;
+  const {
+    name,
+    experience,
+    location,
+    rating,
+    coordinates,
+    email,
+    phone,
+    bio,
+    skills,
+  } = data;
 
   const renderStars = (count: number) =>
     Array.from({ length: 5 }, (_, i) => (
@@ -41,9 +55,7 @@ export default function Profile({ data, onClose }: ProfileProps) {
       </View>
 
       <Text style={styles.description}>
-        Hi! My name is {name}. I have been working in coffee picking for{" "}
-        {experience} years. I specialize in long hours, large acres, and dry
-        climates.
+        {bio || "No bio available."}
       </Text>
 
       <View style={{ height: 12 }} />

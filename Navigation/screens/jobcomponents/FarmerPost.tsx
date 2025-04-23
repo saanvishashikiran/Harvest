@@ -20,6 +20,7 @@ type CustomerProps = {
   pay?: number;
   jobDescription?: string;
   navigation: any;
+  post_id?: number;
 };
 
 const buttonPress = () => {
@@ -29,9 +30,10 @@ const buttonPress = () => {
 
 const FarmerPost = (props: CustomerProps) => {
   const { navigation } = props;
-
+  console.log("FarmerPost props:", props.post_id);
   const goToCandidateFeed = () => {
-    navigation.navigate("CandidateFeed");
+    navigation.navigate("CandidateFeed", { postId: props.post_id });
+
   };
   return (
     <View style={styles.box}>

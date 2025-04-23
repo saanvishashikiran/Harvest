@@ -9,12 +9,16 @@ type ProfileProps = {
     location: string;
     rating: number;
     coordinates: { lat: number; lng: number };
+    email: string;
+    phone: string;
+    bio: string;
+    skill: string;
   };
   onClose: () => void;
 };
 
 export default function Profile({ data, onClose }: ProfileProps) {
-  const { name, experience, location, rating, coordinates } = data;
+  const { name, experience, location, rating, coordinates, email, phone, bio, skill, } = data;
 
   const renderStars = (count: number) =>
     Array.from({ length: 5 }, (_, i) => (
@@ -53,11 +57,7 @@ export default function Profile({ data, onClose }: ProfileProps) {
         </View>
       </View>
 
-      <Text style={styles.description}>
-        Hi! My name is {name}. I have been working in coffee picking for{" "}
-        {experience} years. I specialize in long hours, large acres, and dry
-        climates.
-      </Text>
+      <Text style={styles.description}>{bio || "No bio available."}</Text>
 
       <View style={{ height: 12 }} />
       <Text style={styles.info}>
@@ -65,12 +65,12 @@ export default function Profile({ data, onClose }: ProfileProps) {
       </Text>
       <Text style={styles.info}>
         Specialties:{" "}
-        <Text style={styles.bold}>Long hours, large acres, dry climates</Text>
+        <Text style={styles.bold}>{skill || "No skill availalbe"}</Text>
       </Text>
 
       <View style={{ height: 12 }} />
       <Text style={styles.locationText}>
-        Based in: <Text style={styles.bold}>{location}</Text>
+        Based in: <Text style={styles.bold}>{location || "No location available"}</Text>
       </Text>
 
       <MapView
@@ -90,8 +90,8 @@ export default function Profile({ data, onClose }: ProfileProps) {
 
       <View style={styles.contactSection}>
         <Text style={styles.contactTitle}>Contact Info</Text>
-        <Text style={styles.contactItem}>+ (123) 456-7890</Text>
-        <Text style={styles.contactItem}>picker@example.com</Text>
+        <Text style={styles.contactItem}>{phone || "No phone number available"}</Text>
+        <Text style={styles.contactItem}>{email || "No email available"}</Text>
       </View>
 
       <TouchableOpacity
