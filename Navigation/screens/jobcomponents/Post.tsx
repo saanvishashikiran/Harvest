@@ -52,7 +52,7 @@ const Post = (props: CustomerProps) => {
         <View style={{ flex: 1, marginLeft: 15, marginTop: 5 }}>
           <Text style={styles.miniGreen}>{props.location}</Text>
           <Text style={styles.miniBlack}>
-            Available Positions:{" "}
+            Workers Needed:{" "}
             <Text style={{ fontWeight: "700" }}>{props.position}</Text>
           </Text>
           <Text style={styles.miniBlack}>
