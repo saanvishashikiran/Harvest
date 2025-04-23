@@ -126,7 +126,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
   };
 
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       <View style={styles.logoimage}>
         <Image
           source={require("../../../assets/logo.png")}
@@ -276,11 +276,13 @@ const styles = StyleSheet.create({
     width: 170,
     height: 70,
     marginBottom: 0,
+    marginTop: -23,
   },
   bigbox: {
     height: 610,
     width: 340,
-    marginTop: 30,
+    marginTop: 17,
+
     backgroundColor: "#C9D9AF",
     marginLeft: 25,
     borderRadius: 10,

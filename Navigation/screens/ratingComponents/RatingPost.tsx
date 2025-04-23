@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginLeft: 12,
     borderRadius: 8,
+    
   },
   text: {
     fontFamily: "Roboto Regular",

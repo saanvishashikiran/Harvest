@@ -1,4 +1,4 @@
-import RootNavigator from "./Navigation/RootNavigator";
+import RootNavigator from "./navigation/RootNavigator";
 
 export default function App() {
   return <RootNavigator />;
