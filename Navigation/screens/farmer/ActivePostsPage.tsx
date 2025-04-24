@@ -23,12 +23,15 @@ const ActivePostsPage = () => {
         setRefreshing(false);
     };
     const fetchJobPosts = async () => {
-            const { data: {user}, error: userError } = await supabase.auth.getUser();
-                if (userError) {
-                    console.error("Error fetching userID:", userError);
-                    return;
-                }
-            
+            const {
+              data: { user },
+              error: userError,
+            } = await supabase.auth.getUser();
+            if (userError) {
+              console.error("Error fetching userID:", userError);
+              return;
+            }
+              
             const farmerId = user?.id;
             const { data: farmerData, error: farmerError } = await supabase
             .from("accounts")

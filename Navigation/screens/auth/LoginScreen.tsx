@@ -27,7 +27,7 @@ const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) =>{
       email,
       password,
     });
-
+    
     if (error) {
       Alert.alert("Login Failed", error.message);
     } else {
