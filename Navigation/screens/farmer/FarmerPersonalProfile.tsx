@@ -131,26 +131,11 @@ const updateProfile = async () => {
               />
             )}
           </View>
-          <View style={{ flex: 1, flexDirection: "row", marginBottom: 10 }}>
-            <View style={styles.star}>
-              <Image source={require("../../../photos/Star.png")} />
-            </View>
-            <Text
-              style={{
-                marginTop: 15,
-                marginLeft: 5,
-                fontFamily: "Roboto Regular",
-                fontSize: 17,
-              }}
-            >
-              {props.rating}
-            </Text>
-          </View>
           <TouchableOpacity onPress={changeImage} style={styles.photoButton}>
             <Text style={styles.photoButtonText}>Change Photo</Text>
           </TouchableOpacity>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>FIRST NAME</Text>
+            <Text style={styles.textStyled}>First Name</Text>
             <TextInput
               style={styles.textBox}
               onChangeText={setFirstName}
@@ -158,7 +143,7 @@ const updateProfile = async () => {
             />
           </View>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>LAST NAME</Text>
+            <Text style={styles.textStyled}>Last Name</Text>
             <TextInput
               style={styles.textBox}
               onChangeText={setLastName}
@@ -166,7 +151,7 @@ const updateProfile = async () => {
             />
           </View>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>PHONE NUMBER</Text>
+            <Text style={styles.textStyled}>Phone Number</Text>
             <TextInput
               style={styles.textBox}
               onChangeText={(text) => {
@@ -179,7 +164,7 @@ const updateProfile = async () => {
             />
           </View>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>EMAIL</Text>
+            <Text style={styles.textStyled}>Email</Text>
             <TextInput
               style={styles.textBox}
               onChangeText={setEmail}
@@ -221,7 +206,7 @@ const styles = StyleSheet.create({
     width: 340,
     marginTop: 17,
     backgroundColor: "#C9D9AF",
-    marginLeft: 30,
+    marginLeft: 25,
     borderRadius: 10,
   },
   bigboxheader: {
@@ -286,7 +271,7 @@ const styles = StyleSheet.create({
   },
   photoButton: {
     backgroundColor: "#477943",
-    marginTop: 5,
+    marginTop: 17,
     width: 120,
     height: 27,
     marginLeft: 117,

@@ -125,7 +125,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
   };
 
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       <View style={styles.logoimage}>
         <Image
           source={require("../../../assets/logo.png")}
@@ -168,7 +168,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
             <Text style={styles.photoButtonText}>Change Photo</Text>
           </TouchableOpacity>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>FIRST NAME</Text>
+            <Text style={styles.textStyled}>First Name</Text>
             <TextInput
               style={styles.textBox}
               onChangeText={setFirstName}
@@ -176,7 +176,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
             />
           </View>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>LAST NAME</Text>
+            <Text style={styles.textStyled}>Last Name</Text>
             <TextInput
               style={styles.textBox}
               onChangeText={setLastName}
@@ -184,7 +184,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
             />
           </View>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>PHONE NUMBER</Text>
+            <Text style={styles.textStyled}>Phone Number</Text>
             <TextInput
               style={styles.textBox}
               onChangeText={setPhone}
@@ -193,7 +193,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
             />
           </View>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>EMAIL</Text>
+            <Text style={styles.textStyled}>Email</Text>
             <TextInput
               style={styles.textBox}
               onChangeText={setEmail}
@@ -201,7 +201,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
             />
           </View>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>EXPERIENCE</Text>
+            <Text style={styles.textStyled}>Experience</Text>
             <TextInput
               style={styles.textBox}
               onChangeText={(text) => {
@@ -214,7 +214,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
             />
           </View>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>LOCATION</Text>
+            <Text style={styles.textStyled}>Location</Text>
             <TextInput
               style={styles.textBox}
               onChangeText={setLocation}
@@ -222,7 +222,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
             />
           </View>
           <View style={styles.dropDown}>
-            <Text style={styles.textStyled}>SKILLS</Text>
+            <Text style={styles.textStyled}>Skills</Text>
             <DropDownPicker
               placeholder="Select a Skill"
               open={open}
@@ -236,7 +236,7 @@ const PickerPersonalProfile = (props: PickerProps) => {
             />
           </View>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>BIOGRAPHY</Text>
+            <Text style={styles.textStyled}>Biography</Text>
             <TextInput
               style={styles.descripBox}
               editable
@@ -275,13 +275,15 @@ const styles = StyleSheet.create({
     width: 170,
     height: 70,
     marginBottom: 0,
+    marginTop: -23,
   },
   bigbox: {
     height: 610,
     width: 340,
-    marginTop: 30,
+    marginTop: 17,
+
     backgroundColor: "#C9D9AF",
-    marginLeft: 30,
+    marginLeft: 25,
     borderRadius: 10,
   },
   bigboxheader: {
@@ -349,7 +351,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     width: 120,
     height: 27,
-    marginLeft: 117,
+    marginLeft: 118,
     marginBottom: 5,
     borderRadius: 20,
   },

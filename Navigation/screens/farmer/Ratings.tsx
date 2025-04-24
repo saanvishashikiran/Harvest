@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   image: {
     marginTop: 50,
     marginLeft: 110,
-    marginBottom: 32,
+    marginBottom: 20,
     width: 178,
     height: 40,
   },
@@ -106,5 +106,6 @@ const styles = StyleSheet.create({
     width: 170,
     height: 70,
     marginBottom: 0,
+    marginTop: -10,
   },
 });

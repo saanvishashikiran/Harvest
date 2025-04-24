@@ -156,7 +156,7 @@ const handleSubmit = async () => {
             )}
           </View>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>END DATE</Text>
+            <Text style={styles.textStyled}>End Date</Text>
             <TouchableOpacity
               onPress={() => setShowEndDatePicker(true)}
               style={styles.dateBox}
@@ -175,7 +175,7 @@ const handleSubmit = async () => {
             )}
           </View>
           <View style={styles.infoBox}>
-            <Text style={styles.textStyled}>Available Positions</Text>
+            <Text style={styles.textStyled}>Workers Needed</Text>
             <TextInput
               style={styles.textBox}
               keyboardType="numeric"
@@ -185,7 +185,7 @@ const handleSubmit = async () => {
                   setAvailablePositions(text);
                 }
               }}
-              placeholder="Available Positions"
+              placeholder="Workers Needed"
             />
           </View>
           <View style={styles.infoBox}>
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     width: 340,
     marginTop: 10,
     backgroundColor: "#C9D9AF",
-    marginLeft: 30,
+    marginLeft: 25,
     borderRadius: 10,
   },
   bigboxheader: {
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
   bigboxtext: {
     color: "white",
     fontSize: 25,
-    marginLeft: 105,
+    marginLeft: 103,
     marginTop: 8,
     fontWeight: 700,
     fontFamily: "Roboto Regular",
