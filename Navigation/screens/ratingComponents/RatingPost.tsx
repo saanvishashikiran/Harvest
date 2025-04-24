@@ -15,16 +15,17 @@ type CustomerProps = {
   title?: string;
   date?: string;
   location?: string;
-  position?: number;
+  available_positions?: number;
   pay?: number;
   jobDescription?: string;
   navigation: any;
+  post_id?: number;
 };
 
 const RatingPost = (props: CustomerProps) => {
   const { navigation } = props;
   const goToRateWorker = () => {
-    navigation.navigate("RateWorker");
+     navigation.navigate("RateWorker", { postId: props.post_id });
   };
   return (
     <View style={styles.box}>
@@ -53,7 +54,7 @@ const RatingPost = (props: CustomerProps) => {
           <Text style={styles.miniGreen}>{props.location}</Text>
           <Text style={styles.miniBlack}>
             Available Positions:{" "}
-            <Text style={{ fontWeight: "700" }}>{props.position}</Text>
+            <Text style={{ fontWeight: "700" }}>{props.available_positions}</Text>
           </Text>
           <Text style={styles.miniBlack}>
             Pay Rate: <Text style={{ fontWeight: "700" }}>${props.pay}/hr</Text>

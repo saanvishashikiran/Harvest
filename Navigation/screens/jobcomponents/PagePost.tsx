@@ -10,6 +10,7 @@ import {
 import React from "react";
 
 type CustomerProps = {
+  farmerName?: string;
   title?: string;
   date?: string;
   location?: string;
@@ -29,9 +30,8 @@ const PagePost = (props: CustomerProps) => {
         <View
           style={{ flex: 1, flexWrap: "wrap", marginTop: 8, marginLeft: 10 }}
         >
-          <Image source={require("../../../photos/UserPhoto.png")} />
           <View style={{ marginTop: 7, marginLeft: 8 }}>
-            <Text style={styles.text}>username</Text>
+            <Text style={styles.text}>Accepted by {props.farmerName || "Farm Owner"}</Text>
           </View>
         </View>
       </View>

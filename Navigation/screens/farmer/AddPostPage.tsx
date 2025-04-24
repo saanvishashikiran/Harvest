@@ -81,7 +81,7 @@ const handleSubmit = async () => {
         title: title,
         start_date: correctedStartDate.toISOString().split("T")[0],
         end_date: correctedEndDate.toISOString().split("T")[0],
-        avaliable_positions: positions,
+        available_positions: positions,
         pay_rate: rate,
         location: location,
         description: description,
@@ -212,7 +212,6 @@ const handleSubmit = async () => {
             />
           </View>
           <View style={styles.infoBox}>
-          
             <Text style={styles.textStyled}>Description</Text>
             <TextInput
               style={styles.descripBox}

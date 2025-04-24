@@ -16,10 +16,11 @@ type CustomerProps = {
   title?: string;
   date?: string;
   location?: string;
-  position?: number;
+  available_positions?: number;
   pay?: number;
   jobDescription?: string;
   navigation: any;
+  post_id?: number;
 };
 
 const buttonPress = () => {
@@ -29,8 +30,10 @@ const buttonPress = () => {
 
 const FarmerPost = (props: CustomerProps) => {
   const { navigation } = props;
+  console.log("FarmerPost props:", props.post_id);
   const goToCandidateFeed = () => {
-    navigation.navigate("CandidateFeed");
+  navigation.navigate("CandidateFeed", { postId: props.post_id });
+
   };
   return (
     <View style={styles.box}>
@@ -40,7 +43,7 @@ const FarmerPost = (props: CustomerProps) => {
         >
           <Image source={require("../../../photos/UserPhoto.png")} />
           <View style={{ marginTop: 7, marginLeft: 8 }}>
-            <Text style={styles.text}>{props.farmerName || "username"}</Text>
+            <Text style={styles.text}>Your Post</Text>
           </View>
           <TouchableOpacity onPress={buttonPress} style={styles.deleteButton}>
             <Text style={{ fontSize: 25, color: "white" }}>x</Text>
@@ -48,9 +51,7 @@ const FarmerPost = (props: CustomerProps) => {
         </View>
       </View>
 
-      <Text style={styles.helpText}>{props.location}!</Text>
-      <Text style={styles.titleText}>{props.title}</Text>
-      <Text style={styles.dateText}>Date: {props.date}</Text>
+      <Text style={styles.helpText}>{props.title}</Text>
 
       <View
         style={{
@@ -63,8 +64,7 @@ const FarmerPost = (props: CustomerProps) => {
         <View style={{ flex: 1, marginLeft: 15, marginTop: 5 }}>
           <Text style={styles.miniGreen}>{props.location}</Text>
           <Text style={styles.miniBlack}>
-            Workers Needed:{" "}
-            <Text style={{ fontWeight: "700" }}>{props.position}</Text>
+            Available Positions: <Text style={{ fontWeight: "700" }}>{props.available_positions}</Text>
           </Text>
           <Text style={styles.miniBlack}>
             Pay Rate: <Text style={{ fontWeight: "700" }}>${props.pay}/hr</Text>

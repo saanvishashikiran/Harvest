@@ -9,21 +9,61 @@ import {
 } from "react-native";
 import React from "react";
 import { Title } from "react-native-paper";
+import { supabase } from "../../../lib/supabase";
 
 type CustomerProps = {
+  farmerName?: string;
   title?: string;
   date?: string;
   location?: string;
   position?: number;
   pay?: number;
   jobDescription?: string;
+  job_id?: number;
 };
 
 const buttonPress = () => {
   Alert.alert("Button pressed!");
 };
 
+
 const Post = (props: CustomerProps) => {
+  const handleSendProfile = async () => {
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      Alert.alert("Error", "You must be logged in to apply.");
+      return;
+    }
+    const { data: existing, error: fetchError } = await supabase
+      .from("job_applications")
+      .select("*")
+      .eq("job_id", props.job_id)
+      .eq("picker_id", user.id)
+      .maybeSingle(); // returns null if none found, not an array
+  if (existing) {
+  Alert.alert("Already Applied", "You have already applied to this job.");
+  return;
+  }
+    const { error } = await supabase.from("job_applications").upsert(
+      {
+        picker_id: user.id,
+        job_id: props.job_id, // you must pass job_id from parent
+        status: "pending",
+      },
+      { onConflict: "job_id, picker_id" } // avoid duplicates
+    );
+
+    if (error) {
+      console.error("Application failed:", error);
+      Alert.alert("Error", "Could not send profile.");
+    } else {
+      Alert.alert("Success", "Your profile has been sent!");
+    }
+  };
   return (
     <View style={styles.box}>
       <View style={styles.header}>
@@ -32,7 +72,7 @@ const Post = (props: CustomerProps) => {
         >
           <Image source={require("../../../photos/UserPhoto.png")} />
           <View style={{ marginTop: 7, marginLeft: 8 }}>
-            <Text style={styles.text}>username</Text>
+            <Text style={styles.text}>{props.farmerName || "Farm Owner"}</Text>
           </View>
         </View>
       </View>
@@ -65,7 +105,7 @@ const Post = (props: CustomerProps) => {
         <View style={{ marginTop: -15, marginRight: 15 }}>
           <Image source={require("../../../photos/MapOne.png")} />
 
-          <TouchableOpacity onPress={buttonPress} style={styles.button}>
+          <TouchableOpacity onPress={handleSendProfile} style={styles.button}>
             <Text style={styles.buttonText}>Send My Profile</Text>
           </TouchableOpacity>
         </View>

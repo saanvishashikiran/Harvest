@@ -7,28 +7,38 @@ import {
   Dimensions,
   SafeAreaView,
   Image,
+  RefreshControl,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-native-modal";
 import Profile from "./Profile";
 import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
+import { supabase } from "../../../lib/supabase";
+
 
 const windowWidth = Dimensions.get("window").width;
 
-const pickerData = Array.from({ length: 30 }, (_, i) => ({
-  id: (i + 1).toString(),
-  name: `Picker ${i + 1}`,
-  location: "Washington, D.C.",
-  experience: Math.floor(Math.random() * 15) + 1,
-  rating: Math.floor(Math.random() * 5) + 1,
-  coordinates: { lat: 38.9072 + i * 0.01, lng: -77.0369 + i * 0.01 },
-}));
+// const pickerData = Array.from({ length: 30 }, (_, i) => ({
+//   id: (i + 1).toString(),
+//   name: `Picker ${i + 1}`,
+//   location: "Washington, D.C.",
+//   experience: Math.floor(Math.random() * 15) + 1,
+//   rating: Math.floor(Math.random() * 5) + 1,
+//   coordinates: { lat: 38.9072 + i * 0.01, lng: -77.0369 + i * 0.01 },
+// }));
 
 export default function CandidateFeed() {
+  const route = useRoute();
+  const { postId } = route.params as { postId: string };
   const navigation = useNavigation();
 
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedPicker, setSelectedPicker] = useState(null);
+  const [pickerData, setPickerData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
 
   const openProfile = (picker: any) => {
     setSelectedPicker(picker);
@@ -80,6 +90,56 @@ export default function CandidateFeed() {
       </View>
     );
   };
+const fetchApplicants = async () => {
+  const { data, error } = await supabase
+    .from("job_applications")
+    .select(
+      `
+      *,
+      accounts:picker_id (
+        first_name,
+        last_name,
+        location,
+        experience,
+        rating,
+        skill,
+        bio,
+        email,
+        phone
+      )
+    `
+    )
+    .eq("job_id", postId);
+console.log("Fetched applicants:", data);
+  if (error) {
+    console.error("Error fetching applicants:", error);
+  } else {
+    const mapped = data.map((entry) => ({
+      pickerId: entry.picker_id,
+      postId: postId,
+      name: `${entry.accounts.first_name} ${entry.accounts.last_name}`,
+      location: entry.accounts.location,
+      experience: entry.accounts.experience,
+      rating: entry.accounts.rating,
+      coordinates: { lat: 38.9072, lng: -77.0369 }, // Placeholder coordinates
+      bio: entry.accounts.bio,
+      skill: entry.accounts.skill,
+      email: entry.accounts.email,
+      phone: entry.accounts.phone,
+    }));
+    setPickerData(mapped);
+  }
+  setLoading(false);
+};
+
+useEffect(() => {
+  fetchApplicants();
+}, []);
+const onRefresh = async () => {
+  setRefreshing(true);
+  await fetchApplicants();
+  setRefreshing(false);
+};
 
   return (
     <SafeAreaView style={styles.container}>
@@ -100,13 +160,26 @@ export default function CandidateFeed() {
           style={styles.logo}
           resizeMode="contain"
         />
-        <FlatList
-          data={pickerData}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          contentContainerStyle={{ paddingBottom: 20 }}
-        />
+        {loading ? (
+          <Text style={{ textAlign: "center", marginTop: 20 }}>
+            Loading candidates...
+          </Text>
+        ) : pickerData.length === 0 ? (
+          <Text style={{ textAlign: "center", marginTop: 20 }}>
+            No one has applied to this job yet.
+          </Text>
+        ) : (
+          <FlatList
+            data={pickerData}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.pickerId}
+            numColumns={2}
+            contentContainerStyle={{ paddingBottom: 20 }}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
+        )}
       </View>
       <Modal
         isVisible={modalVisible}

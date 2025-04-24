@@ -5,13 +5,60 @@ import {
   Image,
   ScrollView,
   SafeAreaView,
+  RefreshControl,
 } from "react-native";
 import React from "react";
 import Post from "../jobcomponents/Post";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { logToLogBoxAndConsole } from "react-native-reanimated/lib/typescript/logger";
+import { supabase } from "../../../lib/supabase";
 
 const JobsPage = () => {
+  const [jobs, setJobs] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const fetchJobs = async () => {
+    setLoading(true);
+const { data, error } = await supabase
+  .from("job_posts")
+  .select(
+    `
+    post_id,
+    title,
+    location,
+    pay_rate,
+    start_date,
+    end_date,
+    description,
+    available_positions,
+    farmer_id,
+    accounts:farmer_id (
+      first_name,
+      last_name
+    )
+  `
+  )
+  .order("created_at", { ascending: false });
+
+
+    if (error) {
+      console.error("Error fetching jobs:", error);
+    } else {
+      setJobs(data || []);
+    }
+    setLoading(false);
+  };
+
+  React.useEffect(() => {
+    fetchJobs();
+  }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchJobs();
+    setRefreshing(false);
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       <View style={styles.imageContainer}>
@@ -21,39 +68,31 @@ const JobsPage = () => {
           resizeMode="contain"
         />
       </View>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Post
-          title="Apple Picking"
-          date="3/20/20"
-          position={400}
-          location="Farmington, CT"
-          pay={2}
-          jobDescription="You can pick anything you want"
-        />
-        <Post
-          title="Tomato Harvesting"
-          date="3/22/20"
-          position={250}
-          location="Hartford, CT"
-          pay={3}
-          jobDescription="Sort and harvest tomatoes by type"
-        />
-        <Post
-          title="Cucumber Sorting"
-          date="3/25/20"
-          position={180}
-          location="New Haven, CT"
-          pay={2.5}
-          jobDescription="Sort cucumbers by size for packaging"
-        />
-        <Post
-          title="Berry Basket Packing"
-          date="3/27/20"
-          position={320}
-          location="Bridgeport, CT"
-          pay={3.2}
-          jobDescription="Pack berry baskets carefully and efficiently"
-        />
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {loading ? (
+          <Text style = {styles.centeredText}>Loading jobs...</Text>
+        ) : jobs.length === 0 ? (
+          <Text style = {styles.centeredText}>No jobs available right now.</Text>
+        ) : (
+          jobs.map((job) => (
+            <Post
+              key={job.post_id}
+              title={job.title}
+              date={new Date(job.start_date).toLocaleDateString()}
+              position={job.available_positions}
+              location={job.location}
+              pay={job.pay_rate}
+              jobDescription={job.description}
+              job_id={job.post_id}
+              farmerName={`${job.accounts.first_name} ${job.accounts.last_name}`}
+            />
+          ))
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -62,6 +101,12 @@ const JobsPage = () => {
 export default JobsPage;
 
 const styles = StyleSheet.create({
+  centeredText: {
+    textAlign: "center",
+    marginTop: 40,
+    fontSize: 16,
+    color: "#444",
+  },
   scroll: {},
   imageContainer: {
     marginTop: 3,
