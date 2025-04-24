@@ -160,16 +160,26 @@ const onRefresh = async () => {
           style={styles.logo}
           resizeMode="contain"
         />
-        <FlatList
-          data={pickerData}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          contentContainerStyle={{ paddingBottom: 20 }}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        />
+        {loading ? (
+          <Text style={{ textAlign: "center", marginTop: 20 }}>
+            Loading candidates...
+          </Text>
+        ) : pickerData.length === 0 ? (
+          <Text style={{ textAlign: "center", marginTop: 20 }}>
+            No one has applied to this job yet.
+          </Text>
+        ) : (
+          <FlatList
+            data={pickerData}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.pickerId}
+            numColumns={2}
+            contentContainerStyle={{ paddingBottom: 20 }}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
+        )}
       </View>
       <Modal
         isVisible={modalVisible}

@@ -8,26 +8,25 @@ import {
   SafeAreaView,
   Image,
   Alert,
+  RefreshControl,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-native-modal";
 import RateWorkerProfile from "./RateWorkerProfile";
-import { useNavigation } from "@react-navigation/native";
-
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { supabase } from "../../../lib/supabase";
 const windowWidth = Dimensions.get("window").width;
 
-const pickerData = Array.from({ length: 5 }, (_, i) => ({
-  id: (i + 1).toString(),
-  name: `Picker ${i + 1}`,
-  location: "Washington, D.C.",
-  experience: Math.floor(Math.random() * 15) + 1,
-  rating: 0,
-  coordinates: { lat: 38.9072 + i * 0.01, lng: -77.0369 + i * 0.01 },
-}));
+
 
 export default function RateWorker() {
+  const route = useRoute();
+  const { postId } = route.params as { postId: string };
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedPicker, setSelectedPicker] = useState<any>(null);
+  const [pickerData, setPickerData] = useState<any[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [pickerRatings, setPickerRatings] = useState<{ [id: string]: number }>(
     {}
   );
@@ -35,15 +34,75 @@ export default function RateWorker() {
   const navigation = useNavigation();
 
   const openProfile = (picker: any) => {
+    console.log("Opening profile for picker:", picker); // ✅ Confirm pickerId and farmerId are there
     setSelectedPicker(picker);
+    console.log("Selected picker:", selectedPicker); // ✅ Confirm pickerId and farmerId are there
     setModalVisible(true);
   };
+useEffect(() => {
+  console.log("SelectedPicker has updated:", selectedPicker);
+}, [selectedPicker]);
 
   const closeProfile = () => {
     setModalVisible(false);
     setSelectedPicker(null);
   };
+const fetchAcceptedPickers = async () => {
+  const { data, error } = await supabase
+    .from("job_applications")
+    .select(
+      `
+        *,
+        accounts:picker_id (
+          first_name,
+          last_name,
+          location,
+          experience,
+          rating,
+          skill,
+          bio,
+          email,
+          phone
+        )
+          
+      `
+    )
+    .eq("status", "accepted")
+    .eq("job_id", postId); 
 
+  if (error) {
+    console.error("Error fetching accepted pickers:", error);
+  } else {
+    console.log("Accepted pickers data:", data);
+    const mapped = data.map((entry) => ({
+      pickerId: entry.picker_id,
+      postId: entry.job_id,
+      farmerId: entry.farmer_id, 
+      name: `${entry.accounts.first_name} ${entry.accounts.last_name}`,
+      location: entry.accounts.location,
+      experience: entry.accounts.experience,
+      rating: entry.accounts.rating,
+      coordinates: { lat: 38.9072, lng: -77.0369 },
+      bio: entry.accounts.bio,
+      skill: entry.accounts.skill,
+      email: entry.accounts.email,
+      phone: entry.accounts.phone,
+    }));
+    console.log("Mapped pickers:", mapped);
+    setPickerData(mapped);
+  }
+  setLoading(false);
+};
+
+useEffect(() => {
+  fetchAcceptedPickers();
+}, []);
+
+const onRefresh = async () => {
+  setRefreshing(true);
+  await fetchAcceptedPickers();
+  setRefreshing(false);
+};
   const handleSubmitRating = (rating: number) => {
     if (selectedPicker) {
       setPickerRatings((prev) => ({
@@ -72,6 +131,7 @@ export default function RateWorker() {
 
   const renderItem = ({ item }: any) => {
     const rating = pickerRatings[item.id] || 0;
+    console.log("Passing to profile:", item); // ✅ Confirm pickerId and farmerId are there
 
     let backgroundColor = "#ffffff";
     if (item.experience >= 15) backgroundColor = "#5F8250";
@@ -88,7 +148,7 @@ export default function RateWorker() {
         <Text style={styles.experience}>
           {item.experience} years of experience
         </Text>
-        <View style={styles.stars}>{renderStars(rating)}</View>
+        <View style={styles.stars}>{renderStars(item.rating)}</View>
         <TouchableOpacity
           onPress={() => openProfile(item)}
           style={styles.button}
@@ -120,13 +180,26 @@ export default function RateWorker() {
             resizeMode="contain"
           />
         </View>
-        <FlatList
-          data={pickerData}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          contentContainerStyle={{ paddingBottom: 20 }}
-        />
+        {loading ? (
+          <Text style={{ textAlign: "center", marginTop: 20 }}>
+            Loading candidates...
+          </Text>
+        ) : pickerData.length === 0 ? (
+          <Text style={{ textAlign: "center", marginTop: 20 }}>
+            No one has applied to this job yet.
+          </Text>
+        ) : (
+          <FlatList
+            data={pickerData}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.pickerId}
+            numColumns={2}
+            contentContainerStyle={{ paddingBottom: 20 }}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
+        )}
       </View>
       <Modal
         isVisible={modalVisible}

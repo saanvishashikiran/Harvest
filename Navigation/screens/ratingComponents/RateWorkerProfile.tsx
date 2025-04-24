@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import Modal from "react-native-modal";
+import { supabase } from "../../../lib/supabase";
 
 type RateWorkerModalProps = {
   isVisible: boolean;
@@ -9,6 +10,8 @@ type RateWorkerModalProps = {
   worker: {
     name: string;
     experience: number;
+    pickerId: string;
+    postId: string;
   };
 };
 
@@ -24,11 +27,57 @@ export default function RateWorkerModal({
     setSelectedRating(rating);
   };
 
-  const handleSubmit = () => {
-    onSubmit(selectedRating);
-    onClose();
-    setSelectedRating(0); // reset for next time
-  };
+ const handleSubmit = async () => {
+  
+   const { pickerId, postId} = worker;
+   console.log(worker)
+           const {
+             data: { user },
+             error: userError,
+           } = await supabase.auth.getUser();
+           if (userError) {
+             console.error("Error fetching userID:", userError);
+             return;
+           }
+    const farmerId = user?.id;
+  const { data: existing, error: checkError } = await supabase
+    .from("job_ratings")
+    .select("*")
+    .eq("picker_id", pickerId)
+    .eq("job_id", postId)
+    .eq("farmer_id", farmerId)
+    .maybeSingle();
+console.log(existing)
+  if (checkError) {
+    console.error("Failed to check existing rating:", checkError);
+    Alert.alert("Error", "Something went wrong. Please try again.");
+    return;
+  }
+
+  if (existing) {
+    Alert.alert("Already Rated", "You have already rated this worker.");
+    return;
+  }
+
+   const { error } = await supabase.from("job_ratings").insert([
+     {
+       picker_id: pickerId,
+       job_id: postId,
+       farmer_id: farmerId,
+       rating: selectedRating,
+     },
+   ]);
+
+   if (error) {
+     console.error("Failed to submit rating:", error);
+     Alert.alert("Error", "Could not submit rating. Please try again.");
+   } else {
+     Alert.alert("Success", "Rating has been successfully submitted.");
+     onClose();
+     setSelectedRating(0);
+   }
+ };
+
 
   const getBackgroundColor = (experience: number) => {
     if (experience >= 15) return "#5F8250";
